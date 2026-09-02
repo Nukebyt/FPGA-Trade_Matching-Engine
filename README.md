@@ -15,34 +15,74 @@ this repo asks what changes when the same problem is solved in
 dedicated parallel hardware instead, and measures the answer on real
 silicon rather than assuming it.
 
-## Headline result
+## C++ vs. FPGA: the real numbers
 
-Real, measured, on real hardware — not simulated or projected (full
-numbers and methodology in
-[`docs/fpga-performance.md`](docs/fpga-performance.md)):
+Real, measured, on real hardware — not simulated or projected. Every
+number below is from the same 1,000,000-order trace (`seed=42`), same
+`N_LEVELS=16`/`M_ORDERS=8` bounds, so rows are directly comparable to
+each other (full methodology, including a real ARM measurement-overhead
+finding, in [`docs/fpga-performance.md`](docs/fpga-performance.md)).
 
-- **Fabric-internal matching is ~7.3x faster** than the identical
-  bounded algorithm running natively on the board's own ARM Cortex-A9
-  cores (256 ns vs. 1863 ns mean, same 1,000,000-order trace, same
-  bounds).
-- **But the honest "if you deployed this today" number is *slower* than
-  software** (6342 ns mean round-trip) — the single-order-at-a-time
-  register interface between the ARM cores and the fabric dominates and
-  erases the fabric's own speed advantage. This is the real finding
-  worth taking away: hardware wins the computation decisively and loses
-  the deployed system, for a completely identified, non-mysterious
-  reason (see [`docs/fpga-matching-engine.md`](docs/fpga-matching-engine.md)).
-- Full-system resource usage: **10,688/41,910 ALMs (26%)**, 0 DSP
-  blocks, 6/553 RAM blocks — and the order book itself still uses *zero*
-  embedded RAM even in the full integrated build, confirmed rather than
-  assumed (its parallel-access pattern structurally can't target
-  block RAM's 1-2 ports).
-- Timing fully closed after a real, once-broken pipeline fix:
-  **+5.157ns worst-case setup slack, TNS = 0.000** at every corner —
-  was **-47.6ns** before a genuine synthesizability bug was found and
-  fixed (see `fpga_docs/bugs.md` #13, and the "what actually broke"
-  writeup in [`docs/adr/ADR-007...`](docs/ADR-007-fpga-bounded-order-book.md)'s
-  Amendment section).
+### Per-event latency
+
+| # | Engine | Platform | Mean | p50 | p99 | Reject rate |
+|---|---|---|---|---|---|---|
+| 1 | C++, unbounded `std::map` | x86 dev machine | ~245 ns | n/a¹ | n/a¹ | n/a¹ |
+| 2 | C++, bounded (same N/M as FPGA) | DE10 ARM Cortex-A9, native | 1863.39 ns | 1820.00 ns | 2760.00 ns | 72.359% |
+| 3 | SystemVerilog, fabric-internal | DE10 Cyclone V fabric | **256.31 ns** (12.82 cycles) | 240.00 ns | 480.00 ns | 73.555%² |
+| 4 | Same core, full HPS round-trip | ARM → LWH2F → fabric → ARM | 6341.75 ns | 6320.00 ns | 6420.00 ns | 73.555%² |
+
+¹ Different workload generator (full ADD/MODIFY/CANCEL mix, not the
+ADD-only synthetic trace rows 2-4 share) and an unbounded book — context
+only, not head-to-head; see `docs/fpga-performance.md`'s Row 1 caveat.
+² Rows 3/4 are the same hardware run, so they share one reject count.
+
+**Reading this table correctly is the whole point**: row 3 vs. row 2 is
+the fair, apples-to-apples hardware-vs-software result — the FPGA's
+matching computation is **~7.3x faster**. But row 4, the honest "if you
+deployed this today" number including the register-interface round
+trip, is **~3.4x *slower* than row 2** — the single-order-at-a-time
+`STATUS.BUSY`-polling interface between the ARM cores and the fabric
+dominates and erases the fabric's own speed advantage. Hardware wins the
+computation decisively and loses the deployed system, for a completely
+identified, non-mysterious reason (the interface, not the matching
+logic — see [`docs/fpga-matching-engine.md`](docs/fpga-matching-engine.md)).
+
+### Throughput ceiling
+
+| | Derived from | Events/sec |
+|---|---|---|
+| Core alone (fabric compute) | Row 3 mean | **~3.90M** |
+| Deployed system (core + register interface) | Row 4 mean | **~157.7K** |
+
+The interface, not the fabric, is the system's real bottleneck — by
+~24.75x. See `docs/fpga-performance.md`'s Phase 29 section for the named
+follow-up (a request queue in the register map) this points to.
+
+### Resource utilization (Cyclone V `5CSXFC6D6F31C6`, 41,910 ALM budget)
+
+| | Standalone core only | Full integrated system (HPS + Platform Designer) |
+|---|---|---|
+| ALMs | 9,040 (22%) | 10,688 (26%) |
+| Registers | not separately reported | 15,358 |
+| RAM blocks | 0 / 553 (0%) | 6 / 553 (1%)³ |
+| DSP blocks | 0 / 112 (0%) | 0 / 112 (0%) |
+
+³ Still **zero** from the order book itself, confirmed not assumed —
+its parallel-access pattern structurally can't target block RAM's 1-2
+ports. The 6 blocks come from the surrounding HPS/DDR3 plumbing.
+
+### Timing closure
+
+| | Worst-case setup slack (`CLOCK_50`) | TNS (all corners) |
+|---|---|---|
+| Before fix (single-cycle reduction) | **-47.6 ns** | tens of thousands of ns |
+| After fix (pipelined reduction) | **+5.157 ns** | **0.000** |
+
+A real synthesizability bug, not a rounding error — full root cause in
+`fpga_docs/bugs.md` #13 and the "what actually broke" writeup in
+[`docs/ADR-007-fpga-bounded-order-book.md`](docs/ADR-007-fpga-bounded-order-book.md)'s
+Amendment section.
 
 ## Why a bounded book, and why that's the right hardware answer
 
