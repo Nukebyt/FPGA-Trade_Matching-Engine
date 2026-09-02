@@ -1,0 +1,29 @@
+# Quartus compilation caches - regenerate via quartus_map/quartus_fit/quartus_asm
+# (or the GUI equivalents). Never contain anything not reproducible from
+# the committed .qsf/.sdc/rtl source.
+db/
+incremental_db/
+synth_check/db/
+synth_check/incremental_db/
+
+# Quartus GUI workspace / user-local state
+*.qws
+*.srf
+
+# Questa simulation run artifacts (not the testbenches or .do scripts,
+# which are real source and ARE committed)
+sim/work/
+sim/transcript
+sim/*.wlf
+
+# Deterministic, regenerable test vector (27MB; seed=42 is hardcoded in
+# host/fpga_bridge/tools/gen_trace.cpp - see README.md's Building section
+# for the exact regeneration command)
+sim/trace.csv
+
+# Stray artifact from an earlier Windows shell redirect mistake
+NUL
+
+# Editor / OS
+.DS_Store
+Thumbs.db

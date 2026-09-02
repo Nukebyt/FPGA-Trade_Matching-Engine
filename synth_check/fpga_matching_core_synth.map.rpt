@@ -1,0 +1,688 @@
+Analysis & Synthesis report for fpga_matching_core_synth
+Fri Aug 28 20:55:11 2026
+Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |fpga_matching_core|bounded_order_book:u_book|state
+  9. Registers Removed During Synthesis
+ 10. General Register Statistics
+ 11. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 12. Parameter Settings for User Entity Instance: Top-level Entity: |fpga_matching_core
+ 13. Parameter Settings for User Entity Instance: bounded_order_book:u_book
+ 14. Port Connectivity Checks: "bounded_order_book:u_book"
+ 15. Post-Synthesis Netlist Statistics for Top Partition
+ 16. Elapsed Time Per Partition
+ 17. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2021  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++-------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                  ;
++---------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Fri Aug 28 20:55:11 2026       ;
+; Quartus Prime Version           ; 21.1.0 Build 842 10/21/2021 SJ Lite Edition ;
+; Revision Name                   ; fpga_matching_core_synth                    ;
+; Top-level Entity Name           ; fpga_matching_core                          ;
+; Family                          ; Cyclone V                                   ;
+; Logic utilization (in ALMs)     ; N/A                                         ;
+; Total registers                 ; 10107                                       ;
+; Total pins                      ; 74                                          ;
+; Total virtual pins              ; 0                                           ;
+; Total block memory bits         ; 0                                           ;
+; Total DSP Blocks                ; 0                                           ;
+; Total HSSI RX PCSs              ; 0                                           ;
+; Total HSSI PMA RX Deserializers ; 0                                           ;
+; Total HSSI TX PCSs              ; 0                                           ;
+; Total HSSI PMA TX Serializers   ; 0                                           ;
+; Total PLLs                      ; 0                                           ;
+; Total DLLs                      ; 0                                           ;
++---------------------------------+---------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                                   ;
++---------------------------------------------------------------------------------+--------------------+--------------------------+
+; Option                                                                          ; Setting            ; Default Value            ;
++---------------------------------------------------------------------------------+--------------------+--------------------------+
+; Device                                                                          ; 5CSXFC6D6F31C6     ;                          ;
+; Top-level entity name                                                           ; fpga_matching_core ; fpga_matching_core_synth ;
+; Family name                                                                     ; Cyclone V          ; Cyclone V                ;
+; Use smart compilation                                                           ; Off                ; Off                      ;
+; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                       ;
+; Enable compact report table                                                     ; Off                ; Off                      ;
+; Restructure Multiplexers                                                        ; Auto               ; Auto                     ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                ; Off                      ;
+; Create Debugging Nodes for IP Cores                                             ; Off                ; Off                      ;
+; Preserve fewer node names                                                       ; On                 ; On                       ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable             ; Enable                   ;
+; Verilog Version                                                                 ; Verilog_2001       ; Verilog_2001             ;
+; VHDL Version                                                                    ; VHDL_1993          ; VHDL_1993                ;
+; State Machine Processing                                                        ; Auto               ; Auto                     ;
+; Safe State Machine                                                              ; Off                ; Off                      ;
+; Extract Verilog State Machines                                                  ; On                 ; On                       ;
+; Extract VHDL State Machines                                                     ; On                 ; On                       ;
+; Ignore Verilog initial constructs                                               ; Off                ; Off                      ;
+; Iteration limit for constant Verilog loops                                      ; 5000               ; 5000                     ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                ; 250                      ;
+; Add Pass-Through Logic to Inferred RAMs                                         ; On                 ; On                       ;
+; Infer RAMs from Raw Logic                                                       ; On                 ; On                       ;
+; Parallel Synthesis                                                              ; On                 ; On                       ;
+; DSP Block Balancing                                                             ; Auto               ; Auto                     ;
+; NOT Gate Push-Back                                                              ; On                 ; On                       ;
+; Power-Up Don't Care                                                             ; On                 ; On                       ;
+; Remove Redundant Logic Cells                                                    ; Off                ; Off                      ;
+; Remove Duplicate Registers                                                      ; On                 ; On                       ;
+; Ignore CARRY Buffers                                                            ; Off                ; Off                      ;
+; Ignore CASCADE Buffers                                                          ; Off                ; Off                      ;
+; Ignore GLOBAL Buffers                                                           ; Off                ; Off                      ;
+; Ignore ROW GLOBAL Buffers                                                       ; Off                ; Off                      ;
+; Ignore LCELL Buffers                                                            ; Off                ; Off                      ;
+; Ignore SOFT Buffers                                                             ; On                 ; On                       ;
+; Limit AHDL Integers to 32 Bits                                                  ; Off                ; Off                      ;
+; Optimization Technique                                                          ; Balanced           ; Balanced                 ;
+; Carry Chain Length                                                              ; 70                 ; 70                       ;
+; Auto Carry Chains                                                               ; On                 ; On                       ;
+; Auto Open-Drain Pins                                                            ; On                 ; On                       ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                ; Off                      ;
+; Auto ROM Replacement                                                            ; On                 ; On                       ;
+; Auto RAM Replacement                                                            ; On                 ; On                       ;
+; Auto DSP Block Replacement                                                      ; On                 ; On                       ;
+; Auto Shift Register Replacement                                                 ; Auto               ; Auto                     ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto               ; Auto                     ;
+; Auto Clock Enable Replacement                                                   ; On                 ; On                       ;
+; Strict RAM Replacement                                                          ; Off                ; Off                      ;
+; Allow Synchronous Control Signals                                               ; On                 ; On                       ;
+; Force Use of Synchronous Clear Signals                                          ; Off                ; Off                      ;
+; Auto Resource Sharing                                                           ; Off                ; Off                      ;
+; Allow Any RAM Size For Recognition                                              ; Off                ; Off                      ;
+; Allow Any ROM Size For Recognition                                              ; Off                ; Off                      ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                ; Off                      ;
+; Use LogicLock Constraints during Resource Balancing                             ; On                 ; On                       ;
+; Ignore translate_off and synthesis_off directives                               ; Off                ; Off                      ;
+; Timing-Driven Synthesis                                                         ; On                 ; On                       ;
+; Report Parameter Settings                                                       ; On                 ; On                       ;
+; Report Source Assignments                                                       ; On                 ; On                       ;
+; Report Connectivity Checks                                                      ; On                 ; On                       ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                ; Off                      ;
+; Synchronization Register Chain Length                                           ; 3                  ; 3                        ;
+; Power Optimization During Synthesis                                             ; Normal compilation ; Normal compilation       ;
+; HDL message level                                                               ; Level2             ; Level2                   ;
+; Suppress Register Optimization Related Messages                                 ; Off                ; Off                      ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000               ; 5000                     ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000               ; 5000                     ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                ; 100                      ;
+; Clock MUX Protection                                                            ; On                 ; On                       ;
+; Auto Gated Clock Conversion                                                     ; Off                ; Off                      ;
+; Block Design Naming                                                             ; Auto               ; Auto                     ;
+; SDC constraint protection                                                       ; Off                ; Off                      ;
+; Synthesis Effort                                                                ; Auto               ; Auto                     ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                 ; On                       ;
+; Pre-Mapping Resynthesis Optimization                                            ; Off                ; Off                      ;
+; Analysis & Synthesis Message Level                                              ; Medium             ; Medium                   ;
+; Disable Register Merging Across Hierarchies                                     ; Auto               ; Auto                     ;
+; Resource Aware Inference For Block RAM                                          ; On                 ; On                       ;
+; Automatic Parallel Synthesis                                                    ; On                 ; On                       ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                ; Off                      ;
++---------------------------------------------------------------------------------+--------------------+--------------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 12          ;
+; Maximum allowed            ; 12          ;
+;                            ;             ;
+; Average used               ; 1.83        ;
+; Maximum used               ; 12          ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;  12.7%      ;
+;     Processor 3            ;  12.7%      ;
+;     Processor 4            ;  12.7%      ;
+;     Processor 5            ;  12.7%      ;
+;     Processor 6            ;  12.7%      ;
+;     Processor 7            ;  12.7%      ;
+;     Processor 8            ;   7.0%      ;
+;     Processors 9-12        ;   0.0%      ;
++----------------------------+-------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                         ;
++----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                     ; Library ;
++----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------------+---------+
+; ../rtl/cdc_pulse_sync.sv         ; yes             ; User SystemVerilog HDL File  ; F:/Projects/trading_infra_fpga/d10_standard_golden_top/rtl/cdc_pulse_sync.sv     ;         ;
+; ../rtl/bounded_order_book.sv     ; yes             ; User SystemVerilog HDL File  ; F:/Projects/trading_infra_fpga/d10_standard_golden_top/rtl/bounded_order_book.sv ;         ;
+; ../rtl/fpga_matching_core.sv     ; yes             ; User SystemVerilog HDL File  ; F:/Projects/trading_infra_fpga/d10_standard_golden_top/rtl/fpga_matching_core.sv ;         ;
++----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------------+---------+
+
+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimate of Logic utilization (ALMs needed) ; 9304           ;
+;                                             ;                ;
+; Combinational ALUT usage for logic          ; 7712           ;
+;     -- 7 input functions                    ; 63             ;
+;     -- 6 input functions                    ; 4293           ;
+;     -- 5 input functions                    ; 1143           ;
+;     -- 4 input functions                    ; 1265           ;
+;     -- <=3 input functions                  ; 948            ;
+;                                             ;                ;
+; Dedicated logic registers                   ; 10107          ;
+;                                             ;                ;
+; I/O pins                                    ; 74             ;
+;                                             ;                ;
+; Total DSP Blocks                            ; 0              ;
+;                                             ;                ;
+; Maximum fan-out node                        ; core_clk~input ;
+; Maximum fan-out                             ; 9875           ;
+; Total fan-out                               ; 82974          ;
+; Average fan-out                             ; 4.62           ;
++---------------------------------------------+----------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                             ;
++----------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------+--------------------+--------------+
+; Compilation Hierarchy Node       ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                             ; Entity Name        ; Library Name ;
++----------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------+--------------------+--------------+
+; |fpga_matching_core              ; 7712 (76)           ; 10107 (228)               ; 0                 ; 0          ; 74   ; 0            ; |fpga_matching_core                             ; fpga_matching_core ; work         ;
+;    |bounded_order_book:u_book|   ; 7634 (7634)         ; 9871 (9871)               ; 0                 ; 0          ; 0    ; 0            ; |fpga_matching_core|bounded_order_book:u_book   ; bounded_order_book ; work         ;
+;    |cdc_pulse_sync:u_done_sync|  ; 1 (1)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |fpga_matching_core|cdc_pulse_sync:u_done_sync  ; cdc_pulse_sync     ; work         ;
+;    |cdc_pulse_sync:u_start_sync| ; 1 (1)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |fpga_matching_core|cdc_pulse_sync:u_start_sync ; cdc_pulse_sync     ; work         ;
++----------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------+--------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |fpga_matching_core|bounded_order_book:u_book|state                                                        ;
++--------------------+---------------+---------------+--------------------+----------------+-----------------+---------------+
+; Name               ; state.ST_DONE ; state.ST_REST ; state.ST_POP_LEVEL ; state.ST_MATCH ; state.ST_DECODE ; state.ST_IDLE ;
++--------------------+---------------+---------------+--------------------+----------------+-----------------+---------------+
+; state.ST_IDLE      ; 0             ; 0             ; 0                  ; 0              ; 0               ; 0             ;
+; state.ST_DECODE    ; 0             ; 0             ; 0                  ; 0              ; 1               ; 1             ;
+; state.ST_MATCH     ; 0             ; 0             ; 0                  ; 1              ; 0               ; 1             ;
+; state.ST_POP_LEVEL ; 0             ; 0             ; 1                  ; 0              ; 0               ; 1             ;
+; state.ST_REST      ; 0             ; 1             ; 0                  ; 0              ; 0               ; 1             ;
+; state.ST_DONE      ; 1             ; 0             ; 0                  ; 0              ; 0               ; 1             ;
++--------------------+---------------+---------------+--------------------+----------------+-----------------+---------------+
+
+
++------------------------------------------------------------+
+; Registers Removed During Synthesis                         ;
++---------------------------------------+--------------------+
+; Register name                         ; Reason for Removal ;
++---------------------------------------+--------------------+
+; bounded_order_book:u_book|state~10    ; Lost fanout        ;
+; bounded_order_book:u_book|state~11    ; Lost fanout        ;
+; bounded_order_book:u_book|state~12    ; Lost fanout        ;
+; Total Number of Removed Registers = 3 ;                    ;
++---------------------------------------+--------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 10107 ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 6176  ;
+; Number of registers using Asynchronous Clear ; 891   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 9898  ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                          ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------+
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[0][1][22]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[0][2][0]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[0][3][15]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[0][4][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[0][5][1]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[0][6][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[1][1][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[1][2][5]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[1][3][16]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[1][4][0]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[1][5][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[1][6][15]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[2][1][1]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[2][2][17]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[2][3][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[2][4][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[2][5][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[2][6][29]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[3][1][15]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[3][2][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[3][3][1]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[3][4][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[3][5][6]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[3][6][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[4][1][22]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[4][2][9]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[4][3][17]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[4][4][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[4][5][19]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[4][6][0]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[5][1][9]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[5][2][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[5][3][18]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[5][4][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[5][5][29]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[5][6][23]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[6][1][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[6][2][1]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[6][3][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[6][4][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[6][5][5]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[6][6][16]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[7][1][0]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[7][2][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[7][3][15]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[7][4][1]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[7][5][17]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[7][6][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[8][1][10]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[8][2][0]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[8][3][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[8][4][29]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[8][5][23]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[8][6][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[9][1][0]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[9][2][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[9][3][6]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[9][4][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[9][5][22]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[9][6][9]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[10][1][17]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[10][2][31]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[10][3][19]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[10][4][7]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[10][5][31]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[10][6][14]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[11][1][22]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[11][2][0]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[11][3][16]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[11][4][14]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[11][5][1]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[11][6][14]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[12][1][23]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[12][2][4]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[12][3][17]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[12][4][0]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[12][5][31]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[12][6][15]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[13][1][1]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[13][2][17]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[13][3][14]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[13][4][10]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[13][5][1]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[13][6][14]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[14][1][29]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[14][2][23]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[14][3][31]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[14][4][0]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[14][5][14]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[14][6][6]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[15][1][14]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[15][2][22]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[15][3][9]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[15][4][17]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[15][5][31]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[15][6][19]   ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[0][1][0]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[0][2][9]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[0][3][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[0][4][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[0][5][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[0][6][29]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[1][1][23]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[1][2][31]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[1][3][23]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[1][4][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[1][5][6]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[1][6][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[2][1][22]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[2][2][9]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[2][3][17]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[2][4][31]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[2][5][19]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[2][6][1]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[3][1][10]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[3][2][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[3][3][6]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[3][4][0]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[3][5][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[3][6][29]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[4][1][15]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[4][2][31]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[4][3][19]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[4][4][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[4][5][22]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[4][6][31]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[5][1][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[5][2][1]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[5][3][8]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[5][4][31]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[5][5][31]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[5][6][23]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[6][1][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[6][2][8]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[6][3][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[6][4][10]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[6][5][0]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[6][6][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[7][1][29]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[7][2][23]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[7][3][31]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[7][4][0]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[7][5][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[7][6][6]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[8][1][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[8][2][22]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[8][3][9]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[8][4][17]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[8][5][31]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[8][6][19]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[9][1][1]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[9][2][0]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[9][3][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[9][4][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[9][5][1]      ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[9][6][14]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[10][1][6]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[10][2][29]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[10][3][16]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[10][4][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[10][5][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[10][6][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[11][1][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[11][2][1]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[11][3][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[11][4][7]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[11][5][5]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[11][6][18]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[12][1][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[12][2][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[12][3][27]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[12][4][3]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[12][5][19]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[12][6][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[13][1][5]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[13][2][0]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[13][3][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[13][4][29]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[13][5][15]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[13][6][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[14][1][19]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[14][2][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[14][3][22]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[14][4][1]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[14][5][14]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[14][6][13]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[15][1][9]     ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[15][2][26]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[15][3][31]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[15][4][10]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[15][5][29]    ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 0 LEs                ; 96 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[15][6][13]    ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[0][2]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[1][3]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[2][3]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[3][1]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[4][1]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[5][2]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[6][3]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[7][3]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[8][1]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[9][3]       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[10][1]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[11][2]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[12][0]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[13][0]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[14][2]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_count[15][2]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[0][3]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[1][1]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[2][2]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[3][3]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[4][2]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[5][1]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[6][2]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[7][1]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[8][1]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[9][1]      ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[10][2]     ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[11][1]     ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[12][1]     ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[13][1]     ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[14][2]     ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_count[15][3]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[0][0][8]      ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[1][0][10]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[2][0][6]      ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[3][0][11]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[4][0][12]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[5][0][7]      ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[6][0][7]      ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[7][0][28]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[8][0][23]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[9][0][8]      ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[10][0][9]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[11][0][9]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[12][0][9]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[13][0][9]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[14][0][9]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|buy_qty[15][0][9]     ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[0][0][28]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[1][0][27]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[2][0][19]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[3][0][23]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[4][0][30]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[5][0][22]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[6][0][27]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[7][0][12]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[8][0][13]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[9][0][14]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[10][0][18]   ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[11][0][5]    ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[12][0][30]   ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[13][0][28]   ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[14][0][28]   ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 64 LEs               ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|sell_qty[15][0][30]   ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|reg_last_trade_price  ;
+; 16:1               ; 4 bits    ; 40 LEs        ; 40 LEs               ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|Mux523                ;
+; 16:1               ; 4 bits    ; 40 LEs        ; 40 LEs               ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|Mux527                ;
+; 16:1               ; 64 bits   ; 640 LEs       ; 640 LEs              ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|Mux8                  ;
+; 16:1               ; 8 bits    ; 80 LEs        ; 80 LEs               ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|Mux291                ;
+; 16:1               ; 384 bits  ; 3840 LEs      ; 3840 LEs             ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|Mux70                 ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 0 LEs                ; 64 LEs                 ; Yes        ; |fpga_matching_core|bounded_order_book:u_book|reg_remaining_qty[30] ;
+; 16:1               ; 29 bits   ; 290 LEs       ; 174 LEs              ; 116 LEs                ; No         ; |fpga_matching_core|Mux28                                           ;
+; 16:1               ; 3 bits    ; 30 LEs        ; 18 LEs               ; 12 LEs                 ; No         ; |fpga_matching_core|Mux30                                           ;
+; 16:1               ; 32 bits   ; 320 LEs       ; 320 LEs              ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|Mux492                ;
+; 16:1               ; 19 bits   ; 190 LEs       ; 190 LEs              ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|Mux280                ;
+; 16:1               ; 7 bits    ; 70 LEs        ; 70 LEs               ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|Mux284                ;
+; 16:1               ; 6 bits    ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; No         ; |fpga_matching_core|bounded_order_book:u_book|Mux64                 ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |fpga_matching_core ;
++----------------+-------+-----------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                      ;
++----------------+-------+-----------------------------------------------------------+
+; N_LEVELS       ; 16    ; Signed Integer                                            ;
+; M_ORDERS       ; 8     ; Signed Integer                                            ;
+; PRICE_W        ; 32    ; Signed Integer                                            ;
+; QTY_W          ; 32    ; Signed Integer                                            ;
+; ID_W           ; 64    ; Signed Integer                                            ;
++----------------+-------+-----------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: bounded_order_book:u_book ;
++----------------+-------+-----------------------------------------------+
+; Parameter Name ; Value ; Type                                          ;
++----------------+-------+-----------------------------------------------+
+; N_LEVELS       ; 16    ; Signed Integer                                ;
+; M_ORDERS       ; 8     ; Signed Integer                                ;
+; PRICE_W        ; 32    ; Signed Integer                                ;
+; QTY_W          ; 32    ; Signed Integer                                ;
+; ID_W           ; 64    ; Signed Integer                                ;
++----------------+-------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "bounded_order_book:u_book"                                                          ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; busy ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; arriav_ff             ; 10107                       ;
+;     CLR               ; 209                         ;
+;     ENA               ; 3072                        ;
+;     ENA CLR           ; 650                         ;
+;     ENA CLR SLD       ; 32                          ;
+;     ENA SLD           ; 6144                        ;
+; arriav_lcell_comb     ; 7712                        ;
+;     arith             ; 193                         ;
+;         0 data inputs ; 2                           ;
+;         1 data inputs ; 94                          ;
+;         2 data inputs ; 33                          ;
+;         3 data inputs ; 2                           ;
+;         5 data inputs ; 62                          ;
+;     extend            ; 63                          ;
+;         7 data inputs ; 63                          ;
+;     normal            ; 7392                        ;
+;         1 data inputs ; 4                           ;
+;         2 data inputs ; 256                         ;
+;         3 data inputs ; 493                         ;
+;         4 data inputs ; 1265                        ;
+;         5 data inputs ; 1081                        ;
+;         6 data inputs ; 4293                        ;
+;     shared            ; 64                          ;
+;         2 data inputs ; 64                          ;
+; boundary_port         ; 74                          ;
+;                       ;                             ;
+; Max LUT depth         ; 80.10                       ;
+; Average LUT depth     ; 23.08                       ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:01:50     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
+    Info: Copyright (C) 2021  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details, at
+    Info: https://fpgasoftware.intel.com/eula.
+    Info: Processing started: Fri Aug 28 20:53:00 2026
+Info: Command: quartus_map fpga_matching_core_synth
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file /projects/trading_infra_fpga/d10_standard_golden_top/rtl/cdc_pulse_sync.sv
+    Info (12023): Found entity 1: cdc_pulse_sync File: F:/Projects/trading_infra_fpga/d10_standard_golden_top/rtl/cdc_pulse_sync.sv Line: 23
+Info (12021): Found 1 design units, including 1 entities, in source file /projects/trading_infra_fpga/d10_standard_golden_top/rtl/bounded_order_book.sv
+    Info (12023): Found entity 1: bounded_order_book File: F:/Projects/trading_infra_fpga/d10_standard_golden_top/rtl/bounded_order_book.sv Line: 25
+Info (12021): Found 1 design units, including 1 entities, in source file /projects/trading_infra_fpga/d10_standard_golden_top/rtl/fpga_matching_core.sv
+    Info (12023): Found entity 1: fpga_matching_core File: F:/Projects/trading_infra_fpga/d10_standard_golden_top/rtl/fpga_matching_core.sv Line: 33
+Info (12127): Elaborating entity "fpga_matching_core" for the top level hierarchy
+Info (12128): Elaborating entity "cdc_pulse_sync" for hierarchy "cdc_pulse_sync:u_start_sync" File: F:/Projects/trading_infra_fpga/d10_standard_golden_top/rtl/fpga_matching_core.sv Line: 169
+Info (12128): Elaborating entity "bounded_order_book" for hierarchy "bounded_order_book:u_book" File: F:/Projects/trading_infra_fpga/d10_standard_golden_top/rtl/fpga_matching_core.sv Line: 209
+Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "buy_oid" into its bus
+Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "buy_qty" into its bus
+Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "sell_oid" into its bus
+Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "sell_qty" into its bus
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 3 registers lost all their fanouts during netlist optimizations.
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 1 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "avs_read" File: F:/Projects/trading_infra_fpga/d10_standard_golden_top/rtl/fpga_matching_core.sv Line: 44
+Info (21057): Implemented 17626 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 42 input pins
+    Info (21059): Implemented 32 output pins
+    Info (21061): Implemented 17552 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 3 warnings
+    Info: Peak virtual memory: 5168 megabytes
+    Info: Processing ended: Fri Aug 28 20:55:11 2026
+    Info: Elapsed time: 00:02:11
+    Info: Total CPU time (on all processors): 00:04:15
+
+

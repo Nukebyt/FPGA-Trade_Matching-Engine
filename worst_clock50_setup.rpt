@@ -1,0 +1,1236 @@
+----------------
+; Command Info ;
+----------------
+Report Timing: Found 5 setup paths (5 violated).  Worst case slack is -47.579 
+
+Tcl Command:
+    report_timing -setup -file worst_clock50_setup.rpt -panel_name {Worst CLOCK_50 setup paths} -to_clock [get_clocks {CLOCK_50}] -npaths 5 -detail full_path
+
+Options:
+    -to_clock [get_clocks {CLOCK_50}] 
+    -setup 
+    -npaths 5 
+    -detail full_path 
+    -panel_name {Worst CLOCK_50 setup paths} 
+    -file {worst_clock50_setup.rpt} 
+
+Delay Model:
+    Slow 1100mV 85C Model
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Summary of Paths                                                                                                                                                                                                                                                                       ;
++---------+--------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+--------------+-------------+--------------+------------+------------+
+; Slack   ; From Node                                                                                        ; To Node                                                                                             ; Launch Clock ; Latch Clock ; Relationship ; Clock Skew ; Data Delay ;
++---------+--------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+--------------+-------------+--------------+------------+------------+
+; -47.579 ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21] ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ; CLOCK_50     ; CLOCK_50    ; 20.000       ; -0.477     ; 66.932     ;
+; -47.578 ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21] ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ; CLOCK_50     ; CLOCK_50    ; 20.000       ; -0.477     ; 66.931     ;
+; -47.568 ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_valid[0]     ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ; CLOCK_50     ; CLOCK_50    ; 20.000       ; -0.469     ; 66.929     ;
+; -47.567 ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_valid[0]     ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ; CLOCK_50     ; CLOCK_50    ; 20.000       ; -0.469     ; 66.928     ;
+; -47.552 ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21] ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ; CLOCK_50     ; CLOCK_50    ; 20.000       ; -0.477     ; 66.905     ;
++---------+--------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------+--------------+-------------+--------------+------------+------------+
+
+Path #1: Setup slack is -47.579 (VIOLATED)
+===============================================================================
++--------------------------------------------------------------------------------------------------------------------------+
+; Path Summary                                                                                                             ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; Property           ; Value                                                                                               ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; From Node          ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21]    ;
+; To Node            ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+; Launch Clock       ; CLOCK_50                                                                                            ;
+; Latch Clock        ; CLOCK_50                                                                                            ;
+; Data Arrival Time  ; 70.730                                                                                              ;
+; Data Required Time ; 23.151                                                                                              ;
+; Slack              ; -47.579 (VIOLATED)                                                                                  ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------+
+; Statistics                                                                         ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Property               ; Value  ; Count ; Total Delay ; % of Total ; Min   ; Max   ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Setup Relationship     ; 20.000 ;       ;             ;            ;       ;       ;
+; Clock Skew             ; -0.477 ;       ;             ;            ;       ;       ;
+; Data Delay             ; 66.932 ;       ;             ;            ;       ;       ;
+; Number of Logic Levels ;        ; 76    ;             ;            ;       ;       ;
+; Physical Delays        ;        ;       ;             ;            ;       ;       ;
+;  Arrival Path          ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 2.389       ; 63         ; 0.000 ; 2.042 ;
+;    Cell                ;        ; 3     ; 1.409       ; 37         ; 0.273 ; 0.661 ;
+;   Data                 ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 77    ; 39.950      ; 60         ; 0.162 ; 1.512 ;
+;    Cell                ;        ; 78    ; 26.982      ; 40         ; 0.000 ; 0.572 ;
+;    uTco                ;        ; 1     ; 0.000       ; 0          ; 0.000 ; 0.000 ;
+;  Required Path         ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 1.961       ; 60         ; 0.000 ; 1.633 ;
+;    Cell                ;        ; 3     ; 1.320       ; 40         ; 0.252 ; 0.661 ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+Note: Negative delays are omitted from totals when calculating percentages
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Arrival Path                                                                                                                                                    ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location             ; Element                                                                                             ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; 0.000    ; 0.000   ;    ;      ;        ;                      ; launch edge time                                                                                    ;
+; 3.798    ; 3.798   ;    ;      ;        ;                      ; clock path                                                                                          ;
+;   0.000  ;   0.000 ;    ;      ;        ;                      ; source latency                                                                                      ;
+;   0.000  ;   0.000 ;    ;      ; 1      ; PIN_AF14             ; CLOCK_50                                                                                            ;
+;   0.000  ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|i                                                                                    ;
+;   0.661  ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|o                                                                                    ;
+;   1.008  ;   0.347 ; RR ; IC   ; 1      ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   1.281  ;   0.273 ; RR ; CELL ; 13724  ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   3.323  ;   2.042 ; RR ; IC   ; 1      ; FF_X85_Y16_N32       ; u0|fpga_matching_core_0|u_book|buy_price[0][21]|clk                                                 ;
+;   3.798  ;   0.475 ; RR ; CELL ; 1      ; FF_X85_Y16_N32       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21]    ;
+; 70.730   ; 66.932  ;    ;      ;        ;                      ; data path                                                                                           ;
+;   3.798  ;   0.000 ;    ; uTco ; 1      ; FF_X85_Y16_N32       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21]    ;
+;   3.798  ;   0.000 ; FF ; CELL ; 4      ; FF_X85_Y16_N32       ; u0|fpga_matching_core_0|u_book|buy_price[0][21]|q                                                   ;
+;   4.330  ;   0.532 ; FF ; IC   ; 1      ; LABCELL_X85_Y16_N24  ; u0|fpga_matching_core_0|u_book|LessThan0~24|datac                                                   ;
+;   4.749  ;   0.419 ; FF ; CELL ; 4      ; LABCELL_X85_Y16_N24  ; u0|fpga_matching_core_0|u_book|LessThan0~24|combout                                                 ;
+;   5.583  ;   0.834 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|datac                                                   ;
+;   5.998  ;   0.415 ; FF ; CELL ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|combout                                                 ;
+;   6.198  ;   0.200 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|datad                                                   ;
+;   6.547  ;   0.349 ; FR ; CELL ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|combout                                                 ;
+;   6.765  ;   0.218 ; RR ; IC   ; 1      ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|datad                                                      ;
+;   7.196  ;   0.431 ; RF ; CELL ; 57     ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|combout                                                    ;
+;   7.913  ;   0.717 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|dataa                                                    ;
+;   8.372  ;   0.459 ; FF ; CELL ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|combout                                                  ;
+;   8.597  ;   0.225 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|datac                                                   ;
+;   9.031  ;   0.434 ; FF ; CELL ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|combout                                                 ;
+;   9.354  ;   0.323 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|datac                                                    ;
+;   9.671  ;   0.317 ; FR ; CELL ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|combout                                                  ;
+;   10.330 ;   0.659 ; RR ; IC   ; 1      ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|dataf                                                   ;
+;   10.419 ;   0.089 ; RF ; CELL ; 39     ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|combout                                                 ;
+;   10.648 ;   0.229 ; FF ; IC   ; 1      ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|datad                                                     ;
+;   10.939 ;   0.291 ; FF ; CELL ; 53     ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|combout                                                   ;
+;   11.797 ;   0.858 ; FF ; IC   ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|datad                                                   ;
+;   12.156 ;   0.359 ; FR ; CELL ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|combout                                                 ;
+;   12.601 ;   0.445 ; RR ; IC   ; 1      ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|datac                                                   ;
+;   13.036 ;   0.435 ; RF ; CELL ; 14     ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|combout                                                 ;
+;   13.835 ;   0.799 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|datae                                             ;
+;   14.020 ;   0.185 ; FF ; CELL ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|combout                                           ;
+;   14.215 ;   0.195 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|datad                                              ;
+;   14.659 ;   0.444 ; FF ; CELL ; 4      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|combout                                            ;
+;   15.158 ;   0.499 ; FF ; IC   ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|datac                                                   ;
+;   15.511 ;   0.353 ; FR ; CELL ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|combout                                                 ;
+;   15.708 ;   0.197 ; RR ; IC   ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|datac                                                   ;
+;   16.130 ;   0.422 ; RF ; CELL ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|combout                                                 ;
+;   16.843 ;   0.713 ; FF ; IC   ; 1      ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|datad                                                   ;
+;   17.197 ;   0.354 ; FR ; CELL ; 39     ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|combout                                                 ;
+;   17.425 ;   0.228 ; RR ; IC   ; 1      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|datab                                              ;
+;   17.922 ;   0.497 ; RR ; CELL ; 3      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|combout                                            ;
+;   18.550 ;   0.628 ; RR ; IC   ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|datac                                                   ;
+;   18.973 ;   0.423 ; RF ; CELL ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|combout                                                 ;
+;   19.173 ;   0.200 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|datac                                                    ;
+;   19.588 ;   0.415 ; FF ; CELL ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|combout                                                  ;
+;   19.794 ;   0.206 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|datad                                                   ;
+;   20.238 ;   0.444 ; FF ; CELL ; 12     ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|combout                                                 ;
+;   20.451 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|datad                                                     ;
+;   20.895 ;   0.444 ; FF ; CELL ; 47     ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|combout                                                   ;
+;   21.880 ;   0.985 ; FF ; IC   ; 1      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|dataf                                                   ;
+;   21.964 ;   0.084 ; FR ; CELL ; 2      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|combout                                                 ;
+;   22.267 ;   0.303 ; RR ; IC   ; 1      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|datad                                                   ;
+;   22.702 ;   0.435 ; RF ; CELL ; 2      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|combout                                                 ;
+;   22.931 ;   0.229 ; FF ; IC   ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|datac                                                   ;
+;   23.323 ;   0.392 ; FR ; CELL ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|combout                                                 ;
+;   23.795 ;   0.472 ; RR ; IC   ; 1      ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|datae                                                   ;
+;   24.058 ;   0.263 ; RF ; CELL ; 39     ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|combout                                                 ;
+;   24.603 ;   0.545 ; FF ; IC   ; 1      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|datac                                                   ;
+;   25.098 ;   0.495 ; FF ; CELL ; 3      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|combout                                                 ;
+;   25.581 ;   0.483 ; FF ; IC   ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|dataa                                                   ;
+;   26.041 ;   0.460 ; FR ; CELL ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|combout                                                 ;
+;   26.226 ;   0.185 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|datab                                                   ;
+;   26.724 ;   0.498 ; RF ; CELL ; 14     ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|combout                                                 ;
+;   27.307 ;   0.583 ; FF ; IC   ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|datae                                                   ;
+;   27.587 ;   0.280 ; FR ; CELL ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|combout                                                 ;
+;   28.072 ;   0.485 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|datae                                                    ;
+;   28.288 ;   0.216 ; RR ; CELL ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|combout                                                  ;
+;   28.787 ;   0.499 ; RR ; IC   ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|dataa                                                    ;
+;   29.290 ;   0.503 ; RF ; CELL ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|combout                                                  ;
+;   29.961 ;   0.671 ; FF ; IC   ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|datac                                                    ;
+;   30.310 ;   0.349 ; FR ; CELL ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|combout                                                  ;
+;   30.532 ;   0.222 ; RR ; IC   ; 1      ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|datac                                                   ;
+;   30.963 ;   0.431 ; RF ; CELL ; 42     ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|combout                                                 ;
+;   31.822 ;   0.859 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|datad                                                    ;
+;   32.262 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|combout                                                  ;
+;   32.503 ;   0.241 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|datac                                                    ;
+;   32.943 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|combout                                                  ;
+;   33.570 ;   0.627 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|datad                                                   ;
+;   34.007 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|combout                                                 ;
+;   34.193 ;   0.186 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|datac                                                     ;
+;   34.641 ;   0.448 ; FF ; CELL ; 58     ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|combout                                                   ;
+;   35.603 ;   0.962 ; FF ; IC   ; 1      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|dataf                                             ;
+;   35.681 ;   0.078 ; FF ; CELL ; 5      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|combout                                           ;
+;   36.737 ;   1.056 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|dataf                                                   ;
+;   36.811 ;   0.074 ; FF ; CELL ; 2      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|combout                                                 ;
+;   37.025 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|datac                                                   ;
+;   37.377 ;   0.352 ; FR ; CELL ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|combout                                                 ;
+;   38.058 ;   0.681 ; RR ; IC   ; 1      ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|datac                                                   ;
+;   38.489 ;   0.431 ; RF ; CELL ; 33     ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|combout                                                 ;
+;   39.340 ;   0.851 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|datad                                             ;
+;   39.781 ;   0.441 ; FF ; CELL ; 5      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|combout                                           ;
+;   39.995 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|datad                                                   ;
+;   40.432 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|combout                                                 ;
+;   40.594 ;   0.162 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|dataa                                                   ;
+;   41.074 ;   0.480 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|combout                                                 ;
+;   41.582 ;   0.508 ; FF ; IC   ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|datac                                                  ;
+;   42.022 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|combout                                                ;
+;   42.664 ;   0.642 ; FF ; IC   ; 1      ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|datad                                                     ;
+;   43.108 ;   0.444 ; FF ; CELL ; 58     ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|combout                                                   ;
+;   44.070 ;   0.962 ; FF ; IC   ; 1      ; LABCELL_X74_Y20_N36  ; u0|fpga_matching_core_0|u_book|buy_best_price~238|dataf                                             ;
+;   44.154 ;   0.084 ; FR ; CELL ; 3      ; LABCELL_X74_Y20_N36  ; u0|fpga_matching_core_0|u_book|buy_best_price~238|combout                                           ;
+;   44.395 ;   0.241 ; RR ; IC   ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|datad                                                   ;
+;   44.819 ;   0.424 ; RF ; CELL ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|combout                                                 ;
+;   45.018 ;   0.199 ; FF ; IC   ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|datad                                                   ;
+;   45.365 ;   0.347 ; FR ; CELL ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|combout                                                 ;
+;   46.035 ;   0.670 ; RR ; IC   ; 1      ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|datac                                                  ;
+;   46.466 ;   0.431 ; RF ; CELL ; 33     ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|combout                                                ;
+;   47.169 ;   0.703 ; FF ; IC   ; 1      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|datad                                             ;
+;   47.613 ;   0.444 ; FF ; CELL ; 4      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|combout                                           ;
+;   47.826 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|datac                                                  ;
+;   48.266 ;   0.440 ; FF ; CELL ; 3      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|combout                                                ;
+;   48.993 ;   0.727 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|datad                                                  ;
+;   49.353 ;   0.360 ; FR ; CELL ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|combout                                                ;
+;   49.540 ;   0.187 ; RR ; IC   ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|dataa                                                  ;
+;   50.037 ;   0.497 ; RF ; CELL ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|combout                                                ;
+;   50.235 ;   0.198 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|dataf                                                     ;
+;   50.313 ;   0.078 ; FF ; CELL ; 58     ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|combout                                                   ;
+;   51.245 ;   0.932 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|dataa                                             ;
+;   51.716 ;   0.471 ; FR ; CELL ; 4      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|combout                                           ;
+;   51.935 ;   0.219 ; RR ; IC   ; 1      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|datad                                                  ;
+;   52.359 ;   0.424 ; RF ; CELL ; 2      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|combout                                                ;
+;   52.577 ;   0.218 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|datad                                                  ;
+;   52.924 ;   0.347 ; FR ; CELL ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|combout                                                ;
+;   53.502 ;   0.578 ; RR ; IC   ; 1      ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|datad                                                  ;
+;   53.933 ;   0.431 ; RF ; CELL ; 34     ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|combout                                                ;
+;   54.652 ;   0.719 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|dataa                                             ;
+;   55.142 ;   0.490 ; FR ; CELL ; 4      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|combout                                           ;
+;   55.372 ;   0.230 ; RR ; IC   ; 1      ; LABCELL_X63_Y19_N42  ; u0|fpga_matching_core_0|u_book|LessThan14~5|datac                                                   ;
+;   55.797 ;   0.425 ; RF ; CELL ; 1      ; LABCELL_X63_Y19_N42  ; u0|fpga_matching_core_0|u_book|LessThan14~5|combout                                                 ;
+;   55.999 ;   0.202 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|datad                                                   ;
+;   56.435 ;   0.436 ; FF ; CELL ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|combout                                                 ;
+;   57.061 ;   0.626 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|datad                                                  ;
+;   57.498 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|combout                                                ;
+;   57.686 ;   0.188 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|dataf                                                     ;
+;   57.764 ;   0.078 ; FF ; CELL ; 42     ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|combout                                                   ;
+;   58.534 ;   0.770 ; FF ; IC   ; 1      ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|datae                                                   ;
+;   58.724 ;   0.190 ; FF ; CELL ; 165    ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|combout                                                 ;
+;   60.236 ;   1.512 ; FF ; IC   ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|datad                                                        ;
+;   60.672 ;   0.436 ; FF ; CELL ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|combout                                                      ;
+;   61.499 ;   0.827 ; FF ; IC   ; 1      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|dataf                                                        ;
+;   61.570 ;   0.071 ; FF ; CELL ; 2      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|combout                                                      ;
+;   62.365 ;   0.795 ; FF ; IC   ; 1      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|datae                                             ;
+;   62.539 ;   0.174 ; FF ; CELL ; 7      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|combout                                           ;
+;   63.241 ;   0.702 ; FF ; IC   ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|dataf                                                  ;
+;   63.314 ;   0.073 ; FF ; CELL ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|combout                                                ;
+;   64.083 ;   0.769 ; FF ; IC   ; 1      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|datae                                                  ;
+;   64.280 ;   0.197 ; FR ; CELL ; 2      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|combout                                                ;
+;   64.829 ;   0.549 ; RR ; IC   ; 1      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|dataf                                                  ;
+;   64.913 ;   0.084 ; RF ; CELL ; 4      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|combout                                                ;
+;   65.135 ;   0.222 ; FF ; IC   ; 1      ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|dataf                                                  ;
+;   65.221 ;   0.086 ; FR ; CELL ; 15     ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|combout                                                ;
+;   65.859 ;   0.638 ; RR ; IC   ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|dataf                                                      ;
+;   65.942 ;   0.083 ; RF ; CELL ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|combout                                                    ;
+;   66.375 ;   0.433 ; FF ; IC   ; 1      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|datab                                                      ;
+;   66.840 ;   0.465 ; FR ; CELL ; 6      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|combout                                                    ;
+;   67.134 ;   0.294 ; RR ; IC   ; 1      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|dataa                                          ;
+;   67.639 ;   0.505 ; RF ; CELL ; 8      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|combout                                        ;
+;   68.673 ;   1.034 ; FF ; IC   ; 1      ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|dataf                                          ;
+;   68.748 ;   0.075 ; FF ; CELL ; 32     ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|combout                                        ;
+;   70.158 ;   1.410 ; FF ; IC   ; 1      ; FF_X57_Y27_N26       ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|ena                                              ;
+;   70.730 ;   0.572 ; FF ; CELL ; 1      ; FF_X57_Y27_N26       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Required Path                                                                                                                                               ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location         ; Element                                                                                             ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; 20.000   ; 20.000  ;    ;      ;        ;                  ; latch edge time                                                                                     ;
+; 23.321   ; 3.321   ;    ;      ;        ;                  ; clock path                                                                                          ;
+;   20.000 ;   0.000 ;    ;      ;        ;                  ; source latency                                                                                      ;
+;   20.000 ;   0.000 ;    ;      ; 1      ; PIN_AF14         ; CLOCK_50                                                                                            ;
+;   20.000 ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|i                                                                                    ;
+;   20.661 ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|o                                                                                    ;
+;   20.989 ;   0.328 ; RR ; IC   ; 1      ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   21.241 ;   0.252 ; RR ; CELL ; 13724  ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   22.874 ;   1.633 ; RR ; IC   ; 1      ; FF_X57_Y27_N26   ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|clk                                              ;
+;   23.281 ;   0.407 ; RR ; CELL ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+;   23.321 ;   0.040 ;    ;      ;        ;                  ; clock pessimism removed                                                                             ;
+; 23.151   ; -0.170  ;    ;      ;        ;                  ; clock uncertainty                                                                                   ;
+; 23.151   ; 0.000   ;    ; uTsu ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+
+----------------------------
+; Extra Fitter Information ;
+----------------------------
+HTML report is unavailable in plain text report export.
+
+
+Path #2: Setup slack is -47.578 (VIOLATED)
+===============================================================================
++--------------------------------------------------------------------------------------------------------------------------+
+; Path Summary                                                                                                             ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; Property           ; Value                                                                                               ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; From Node          ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21]    ;
+; To Node            ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+; Launch Clock       ; CLOCK_50                                                                                            ;
+; Latch Clock        ; CLOCK_50                                                                                            ;
+; Data Arrival Time  ; 70.729                                                                                              ;
+; Data Required Time ; 23.151                                                                                              ;
+; Slack              ; -47.578 (VIOLATED)                                                                                  ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------+
+; Statistics                                                                         ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Property               ; Value  ; Count ; Total Delay ; % of Total ; Min   ; Max   ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Setup Relationship     ; 20.000 ;       ;             ;            ;       ;       ;
+; Clock Skew             ; -0.477 ;       ;             ;            ;       ;       ;
+; Data Delay             ; 66.931 ;       ;             ;            ;       ;       ;
+; Number of Logic Levels ;        ; 76    ;             ;            ;       ;       ;
+; Physical Delays        ;        ;       ;             ;            ;       ;       ;
+;  Arrival Path          ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 2.389       ; 63         ; 0.000 ; 2.042 ;
+;    Cell                ;        ; 3     ; 1.409       ; 37         ; 0.273 ; 0.661 ;
+;   Data                 ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 77    ; 39.909      ; 60         ; 0.162 ; 1.512 ;
+;    Cell                ;        ; 78    ; 27.022      ; 40         ; 0.000 ; 0.572 ;
+;    uTco                ;        ; 1     ; 0.000       ; 0          ; 0.000 ; 0.000 ;
+;  Required Path         ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 1.961       ; 60         ; 0.000 ; 1.633 ;
+;    Cell                ;        ; 3     ; 1.320       ; 40         ; 0.252 ; 0.661 ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+Note: Negative delays are omitted from totals when calculating percentages
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Arrival Path                                                                                                                                                    ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location             ; Element                                                                                             ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; 0.000    ; 0.000   ;    ;      ;        ;                      ; launch edge time                                                                                    ;
+; 3.798    ; 3.798   ;    ;      ;        ;                      ; clock path                                                                                          ;
+;   0.000  ;   0.000 ;    ;      ;        ;                      ; source latency                                                                                      ;
+;   0.000  ;   0.000 ;    ;      ; 1      ; PIN_AF14             ; CLOCK_50                                                                                            ;
+;   0.000  ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|i                                                                                    ;
+;   0.661  ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|o                                                                                    ;
+;   1.008  ;   0.347 ; RR ; IC   ; 1      ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   1.281  ;   0.273 ; RR ; CELL ; 13724  ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   3.323  ;   2.042 ; RR ; IC   ; 1      ; FF_X85_Y16_N32       ; u0|fpga_matching_core_0|u_book|buy_price[0][21]|clk                                                 ;
+;   3.798  ;   0.475 ; RR ; CELL ; 1      ; FF_X85_Y16_N32       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21]    ;
+; 70.729   ; 66.931  ;    ;      ;        ;                      ; data path                                                                                           ;
+;   3.798  ;   0.000 ;    ; uTco ; 1      ; FF_X85_Y16_N32       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21]    ;
+;   3.798  ;   0.000 ; FF ; CELL ; 4      ; FF_X85_Y16_N32       ; u0|fpga_matching_core_0|u_book|buy_price[0][21]|q                                                   ;
+;   4.330  ;   0.532 ; FF ; IC   ; 1      ; LABCELL_X85_Y16_N24  ; u0|fpga_matching_core_0|u_book|LessThan0~24|datac                                                   ;
+;   4.749  ;   0.419 ; FF ; CELL ; 4      ; LABCELL_X85_Y16_N24  ; u0|fpga_matching_core_0|u_book|LessThan0~24|combout                                                 ;
+;   5.583  ;   0.834 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|datac                                                   ;
+;   5.998  ;   0.415 ; FF ; CELL ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|combout                                                 ;
+;   6.198  ;   0.200 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|datad                                                   ;
+;   6.547  ;   0.349 ; FR ; CELL ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|combout                                                 ;
+;   6.765  ;   0.218 ; RR ; IC   ; 1      ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|datad                                                      ;
+;   7.196  ;   0.431 ; RF ; CELL ; 57     ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|combout                                                    ;
+;   7.913  ;   0.717 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|dataa                                                    ;
+;   8.372  ;   0.459 ; FF ; CELL ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|combout                                                  ;
+;   8.597  ;   0.225 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|datac                                                   ;
+;   9.031  ;   0.434 ; FF ; CELL ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|combout                                                 ;
+;   9.354  ;   0.323 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|datac                                                    ;
+;   9.671  ;   0.317 ; FR ; CELL ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|combout                                                  ;
+;   10.330 ;   0.659 ; RR ; IC   ; 1      ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|dataf                                                   ;
+;   10.419 ;   0.089 ; RF ; CELL ; 39     ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|combout                                                 ;
+;   10.648 ;   0.229 ; FF ; IC   ; 1      ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|datad                                                     ;
+;   10.939 ;   0.291 ; FF ; CELL ; 53     ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|combout                                                   ;
+;   11.797 ;   0.858 ; FF ; IC   ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|datad                                                   ;
+;   12.156 ;   0.359 ; FR ; CELL ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|combout                                                 ;
+;   12.601 ;   0.445 ; RR ; IC   ; 1      ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|datac                                                   ;
+;   13.036 ;   0.435 ; RF ; CELL ; 14     ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|combout                                                 ;
+;   13.835 ;   0.799 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|datae                                             ;
+;   14.020 ;   0.185 ; FF ; CELL ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|combout                                           ;
+;   14.215 ;   0.195 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|datad                                              ;
+;   14.659 ;   0.444 ; FF ; CELL ; 4      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|combout                                            ;
+;   15.158 ;   0.499 ; FF ; IC   ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|datac                                                   ;
+;   15.511 ;   0.353 ; FR ; CELL ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|combout                                                 ;
+;   15.708 ;   0.197 ; RR ; IC   ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|datac                                                   ;
+;   16.130 ;   0.422 ; RF ; CELL ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|combout                                                 ;
+;   16.843 ;   0.713 ; FF ; IC   ; 1      ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|datad                                                   ;
+;   17.197 ;   0.354 ; FR ; CELL ; 39     ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|combout                                                 ;
+;   17.425 ;   0.228 ; RR ; IC   ; 1      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|datab                                              ;
+;   17.922 ;   0.497 ; RR ; CELL ; 3      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|combout                                            ;
+;   18.550 ;   0.628 ; RR ; IC   ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|datac                                                   ;
+;   18.973 ;   0.423 ; RF ; CELL ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|combout                                                 ;
+;   19.173 ;   0.200 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|datac                                                    ;
+;   19.588 ;   0.415 ; FF ; CELL ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|combout                                                  ;
+;   19.794 ;   0.206 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|datad                                                   ;
+;   20.238 ;   0.444 ; FF ; CELL ; 12     ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|combout                                                 ;
+;   20.451 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|datad                                                     ;
+;   20.895 ;   0.444 ; FF ; CELL ; 47     ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|combout                                                   ;
+;   21.880 ;   0.985 ; FF ; IC   ; 1      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|dataf                                                   ;
+;   21.964 ;   0.084 ; FR ; CELL ; 2      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|combout                                                 ;
+;   22.267 ;   0.303 ; RR ; IC   ; 1      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|datad                                                   ;
+;   22.702 ;   0.435 ; RF ; CELL ; 2      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|combout                                                 ;
+;   22.931 ;   0.229 ; FF ; IC   ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|datac                                                   ;
+;   23.323 ;   0.392 ; FR ; CELL ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|combout                                                 ;
+;   23.795 ;   0.472 ; RR ; IC   ; 1      ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|datae                                                   ;
+;   24.058 ;   0.263 ; RF ; CELL ; 39     ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|combout                                                 ;
+;   24.603 ;   0.545 ; FF ; IC   ; 1      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|datac                                                   ;
+;   25.098 ;   0.495 ; FF ; CELL ; 3      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|combout                                                 ;
+;   25.581 ;   0.483 ; FF ; IC   ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|dataa                                                   ;
+;   26.041 ;   0.460 ; FR ; CELL ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|combout                                                 ;
+;   26.226 ;   0.185 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|datab                                                   ;
+;   26.724 ;   0.498 ; RF ; CELL ; 14     ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|combout                                                 ;
+;   27.307 ;   0.583 ; FF ; IC   ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|datae                                                   ;
+;   27.587 ;   0.280 ; FR ; CELL ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|combout                                                 ;
+;   28.072 ;   0.485 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|datae                                                    ;
+;   28.288 ;   0.216 ; RR ; CELL ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|combout                                                  ;
+;   28.787 ;   0.499 ; RR ; IC   ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|dataa                                                    ;
+;   29.290 ;   0.503 ; RF ; CELL ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|combout                                                  ;
+;   29.961 ;   0.671 ; FF ; IC   ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|datac                                                    ;
+;   30.310 ;   0.349 ; FR ; CELL ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|combout                                                  ;
+;   30.532 ;   0.222 ; RR ; IC   ; 1      ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|datac                                                   ;
+;   30.963 ;   0.431 ; RF ; CELL ; 42     ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|combout                                                 ;
+;   31.822 ;   0.859 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|datad                                                    ;
+;   32.262 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|combout                                                  ;
+;   32.503 ;   0.241 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|datac                                                    ;
+;   32.943 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|combout                                                  ;
+;   33.570 ;   0.627 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|datad                                                   ;
+;   34.007 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|combout                                                 ;
+;   34.193 ;   0.186 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|datac                                                     ;
+;   34.641 ;   0.448 ; FF ; CELL ; 58     ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|combout                                                   ;
+;   35.603 ;   0.962 ; FF ; IC   ; 1      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|dataf                                             ;
+;   35.681 ;   0.078 ; FF ; CELL ; 5      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|combout                                           ;
+;   36.737 ;   1.056 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|dataf                                                   ;
+;   36.811 ;   0.074 ; FF ; CELL ; 2      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|combout                                                 ;
+;   37.025 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|datac                                                   ;
+;   37.377 ;   0.352 ; FR ; CELL ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|combout                                                 ;
+;   38.058 ;   0.681 ; RR ; IC   ; 1      ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|datac                                                   ;
+;   38.489 ;   0.431 ; RF ; CELL ; 33     ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|combout                                                 ;
+;   39.340 ;   0.851 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|datad                                             ;
+;   39.781 ;   0.441 ; FF ; CELL ; 5      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|combout                                           ;
+;   39.995 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|datad                                                   ;
+;   40.432 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|combout                                                 ;
+;   40.594 ;   0.162 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|dataa                                                   ;
+;   41.074 ;   0.480 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|combout                                                 ;
+;   41.582 ;   0.508 ; FF ; IC   ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|datac                                                  ;
+;   42.022 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|combout                                                ;
+;   42.664 ;   0.642 ; FF ; IC   ; 1      ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|datad                                                     ;
+;   43.108 ;   0.444 ; FF ; CELL ; 58     ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|combout                                                   ;
+;   44.070 ;   0.962 ; FF ; IC   ; 1      ; LABCELL_X74_Y20_N36  ; u0|fpga_matching_core_0|u_book|buy_best_price~238|dataf                                             ;
+;   44.154 ;   0.084 ; FR ; CELL ; 3      ; LABCELL_X74_Y20_N36  ; u0|fpga_matching_core_0|u_book|buy_best_price~238|combout                                           ;
+;   44.395 ;   0.241 ; RR ; IC   ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|datad                                                   ;
+;   44.819 ;   0.424 ; RF ; CELL ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|combout                                                 ;
+;   45.018 ;   0.199 ; FF ; IC   ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|datad                                                   ;
+;   45.365 ;   0.347 ; FR ; CELL ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|combout                                                 ;
+;   46.035 ;   0.670 ; RR ; IC   ; 1      ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|datac                                                  ;
+;   46.466 ;   0.431 ; RF ; CELL ; 33     ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|combout                                                ;
+;   47.169 ;   0.703 ; FF ; IC   ; 1      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|datad                                             ;
+;   47.613 ;   0.444 ; FF ; CELL ; 4      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|combout                                           ;
+;   47.826 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|datac                                                  ;
+;   48.266 ;   0.440 ; FF ; CELL ; 3      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|combout                                                ;
+;   48.993 ;   0.727 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|datad                                                  ;
+;   49.353 ;   0.360 ; FR ; CELL ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|combout                                                ;
+;   49.540 ;   0.187 ; RR ; IC   ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|dataa                                                  ;
+;   50.037 ;   0.497 ; RF ; CELL ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|combout                                                ;
+;   50.235 ;   0.198 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|dataf                                                     ;
+;   50.313 ;   0.078 ; FF ; CELL ; 58     ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|combout                                                   ;
+;   51.245 ;   0.932 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|dataa                                             ;
+;   51.716 ;   0.471 ; FR ; CELL ; 4      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|combout                                           ;
+;   51.935 ;   0.219 ; RR ; IC   ; 1      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|datad                                                  ;
+;   52.359 ;   0.424 ; RF ; CELL ; 2      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|combout                                                ;
+;   52.577 ;   0.218 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|datad                                                  ;
+;   52.924 ;   0.347 ; FR ; CELL ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|combout                                                ;
+;   53.502 ;   0.578 ; RR ; IC   ; 1      ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|datad                                                  ;
+;   53.933 ;   0.431 ; RF ; CELL ; 34     ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|combout                                                ;
+;   54.652 ;   0.719 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|dataa                                             ;
+;   55.142 ;   0.490 ; FR ; CELL ; 4      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|combout                                           ;
+;   55.361 ;   0.219 ; RR ; IC   ; 1      ; LABCELL_X63_Y19_N12  ; u0|fpga_matching_core_0|u_book|LessThan14~4|datac                                                   ;
+;   55.786 ;   0.425 ; RF ; CELL ; 1      ; LABCELL_X63_Y19_N12  ; u0|fpga_matching_core_0|u_book|LessThan14~4|combout                                                 ;
+;   55.958 ;   0.172 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|datab                                                   ;
+;   56.434 ;   0.476 ; FF ; CELL ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|combout                                                 ;
+;   57.060 ;   0.626 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|datad                                                  ;
+;   57.497 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|combout                                                ;
+;   57.685 ;   0.188 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|dataf                                                     ;
+;   57.763 ;   0.078 ; FF ; CELL ; 42     ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|combout                                                   ;
+;   58.533 ;   0.770 ; FF ; IC   ; 1      ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|datae                                                   ;
+;   58.723 ;   0.190 ; FF ; CELL ; 165    ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|combout                                                 ;
+;   60.235 ;   1.512 ; FF ; IC   ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|datad                                                        ;
+;   60.671 ;   0.436 ; FF ; CELL ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|combout                                                      ;
+;   61.498 ;   0.827 ; FF ; IC   ; 1      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|dataf                                                        ;
+;   61.569 ;   0.071 ; FF ; CELL ; 2      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|combout                                                      ;
+;   62.364 ;   0.795 ; FF ; IC   ; 1      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|datae                                             ;
+;   62.538 ;   0.174 ; FF ; CELL ; 7      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|combout                                           ;
+;   63.240 ;   0.702 ; FF ; IC   ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|dataf                                                  ;
+;   63.313 ;   0.073 ; FF ; CELL ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|combout                                                ;
+;   64.082 ;   0.769 ; FF ; IC   ; 1      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|datae                                                  ;
+;   64.279 ;   0.197 ; FR ; CELL ; 2      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|combout                                                ;
+;   64.828 ;   0.549 ; RR ; IC   ; 1      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|dataf                                                  ;
+;   64.912 ;   0.084 ; RF ; CELL ; 4      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|combout                                                ;
+;   65.134 ;   0.222 ; FF ; IC   ; 1      ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|dataf                                                  ;
+;   65.220 ;   0.086 ; FR ; CELL ; 15     ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|combout                                                ;
+;   65.858 ;   0.638 ; RR ; IC   ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|dataf                                                      ;
+;   65.941 ;   0.083 ; RF ; CELL ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|combout                                                    ;
+;   66.374 ;   0.433 ; FF ; IC   ; 1      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|datab                                                      ;
+;   66.839 ;   0.465 ; FR ; CELL ; 6      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|combout                                                    ;
+;   67.133 ;   0.294 ; RR ; IC   ; 1      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|dataa                                          ;
+;   67.638 ;   0.505 ; RF ; CELL ; 8      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|combout                                        ;
+;   68.672 ;   1.034 ; FF ; IC   ; 1      ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|dataf                                          ;
+;   68.747 ;   0.075 ; FF ; CELL ; 32     ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|combout                                        ;
+;   70.157 ;   1.410 ; FF ; IC   ; 1      ; FF_X57_Y27_N26       ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|ena                                              ;
+;   70.729 ;   0.572 ; FF ; CELL ; 1      ; FF_X57_Y27_N26       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Required Path                                                                                                                                               ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location         ; Element                                                                                             ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; 20.000   ; 20.000  ;    ;      ;        ;                  ; latch edge time                                                                                     ;
+; 23.321   ; 3.321   ;    ;      ;        ;                  ; clock path                                                                                          ;
+;   20.000 ;   0.000 ;    ;      ;        ;                  ; source latency                                                                                      ;
+;   20.000 ;   0.000 ;    ;      ; 1      ; PIN_AF14         ; CLOCK_50                                                                                            ;
+;   20.000 ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|i                                                                                    ;
+;   20.661 ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|o                                                                                    ;
+;   20.989 ;   0.328 ; RR ; IC   ; 1      ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   21.241 ;   0.252 ; RR ; CELL ; 13724  ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   22.874 ;   1.633 ; RR ; IC   ; 1      ; FF_X57_Y27_N26   ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|clk                                              ;
+;   23.281 ;   0.407 ; RR ; CELL ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+;   23.321 ;   0.040 ;    ;      ;        ;                  ; clock pessimism removed                                                                             ;
+; 23.151   ; -0.170  ;    ;      ;        ;                  ; clock uncertainty                                                                                   ;
+; 23.151   ; 0.000   ;    ; uTsu ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+
+----------------------------
+; Extra Fitter Information ;
+----------------------------
+HTML report is unavailable in plain text report export.
+
+
+Path #3: Setup slack is -47.568 (VIOLATED)
+===============================================================================
++--------------------------------------------------------------------------------------------------------------------------+
+; Path Summary                                                                                                             ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; Property           ; Value                                                                                               ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; From Node          ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_valid[0]        ;
+; To Node            ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+; Launch Clock       ; CLOCK_50                                                                                            ;
+; Latch Clock        ; CLOCK_50                                                                                            ;
+; Data Arrival Time  ; 70.719                                                                                              ;
+; Data Required Time ; 23.151                                                                                              ;
+; Slack              ; -47.568 (VIOLATED)                                                                                  ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------+
+; Statistics                                                                         ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Property               ; Value  ; Count ; Total Delay ; % of Total ; Min   ; Max   ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Setup Relationship     ; 20.000 ;       ;             ;            ;       ;       ;
+; Clock Skew             ; -0.469 ;       ;             ;            ;       ;       ;
+; Data Delay             ; 66.929 ;       ;             ;            ;       ;       ;
+; Number of Logic Levels ;        ; 76    ;             ;            ;       ;       ;
+; Physical Delays        ;        ;       ;             ;            ;       ;       ;
+;  Arrival Path          ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 2.387       ; 63         ; 0.000 ; 2.040 ;
+;    Cell                ;        ; 3     ; 1.403       ; 37         ; 0.273 ; 0.661 ;
+;   Data                 ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 77    ; 40.153      ; 60         ; 0.162 ; 1.512 ;
+;    Cell                ;        ; 78    ; 26.776      ; 40         ; 0.000 ; 0.572 ;
+;    uTco                ;        ; 1     ; 0.000       ; 0          ; 0.000 ; 0.000 ;
+;  Required Path         ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 1.961       ; 60         ; 0.000 ; 1.633 ;
+;    Cell                ;        ; 3     ; 1.320       ; 40         ; 0.252 ; 0.661 ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+Note: Negative delays are omitted from totals when calculating percentages
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Arrival Path                                                                                                                                                    ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location             ; Element                                                                                             ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; 0.000    ; 0.000   ;    ;      ;        ;                      ; launch edge time                                                                                    ;
+; 3.790    ; 3.790   ;    ;      ;        ;                      ; clock path                                                                                          ;
+;   0.000  ;   0.000 ;    ;      ;        ;                      ; source latency                                                                                      ;
+;   0.000  ;   0.000 ;    ;      ; 1      ; PIN_AF14             ; CLOCK_50                                                                                            ;
+;   0.000  ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|i                                                                                    ;
+;   0.661  ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|o                                                                                    ;
+;   1.008  ;   0.347 ; RR ; IC   ; 1      ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   1.281  ;   0.273 ; RR ; CELL ; 13724  ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   3.321  ;   2.040 ; RR ; IC   ; 1      ; FF_X84_Y14_N28       ; u0|fpga_matching_core_0|u_book|buy_valid[0]|clk                                                     ;
+;   3.790  ;   0.469 ; RR ; CELL ; 1      ; FF_X84_Y14_N28       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_valid[0]        ;
+; 70.719   ; 66.929  ;    ;      ;        ;                      ; data path                                                                                           ;
+;   3.790  ;   0.000 ;    ; uTco ; 1      ; FF_X84_Y14_N28       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_valid[0]        ;
+;   3.790  ;   0.000 ; FF ; CELL ; 40     ; FF_X84_Y14_N28       ; u0|fpga_matching_core_0|u_book|buy_valid[0]|q                                                       ;
+;   4.619  ;   0.829 ; FF ; IC   ; 1      ; LABCELL_X85_Y16_N33  ; u0|fpga_matching_core_0|u_book|LessThan0~27|datad                                                   ;
+;   4.920  ;   0.301 ; FF ; CELL ; 2      ; LABCELL_X85_Y16_N33  ; u0|fpga_matching_core_0|u_book|LessThan0~27|combout                                                 ;
+;   5.767  ;   0.847 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|datad                                                   ;
+;   6.069  ;   0.302 ; FR ; CELL ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|combout                                                 ;
+;   6.283  ;   0.214 ; RR ; IC   ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|datad                                                   ;
+;   6.707  ;   0.424 ; RF ; CELL ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|combout                                                 ;
+;   6.905  ;   0.198 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|datad                                                      ;
+;   7.264  ;   0.359 ; FR ; CELL ; 57     ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|combout                                                    ;
+;   7.880  ;   0.616 ; RR ; IC   ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|dataa                                                    ;
+;   8.361  ;   0.481 ; RF ; CELL ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|combout                                                  ;
+;   8.586  ;   0.225 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|datac                                                   ;
+;   9.020  ;   0.434 ; FF ; CELL ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|combout                                                 ;
+;   9.343  ;   0.323 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|datac                                                    ;
+;   9.660  ;   0.317 ; FR ; CELL ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|combout                                                  ;
+;   10.319 ;   0.659 ; RR ; IC   ; 1      ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|dataf                                                   ;
+;   10.408 ;   0.089 ; RF ; CELL ; 39     ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|combout                                                 ;
+;   10.637 ;   0.229 ; FF ; IC   ; 1      ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|datad                                                     ;
+;   10.928 ;   0.291 ; FF ; CELL ; 53     ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|combout                                                   ;
+;   11.786 ;   0.858 ; FF ; IC   ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|datad                                                   ;
+;   12.145 ;   0.359 ; FR ; CELL ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|combout                                                 ;
+;   12.590 ;   0.445 ; RR ; IC   ; 1      ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|datac                                                   ;
+;   13.025 ;   0.435 ; RF ; CELL ; 14     ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|combout                                                 ;
+;   13.824 ;   0.799 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|datae                                             ;
+;   14.009 ;   0.185 ; FF ; CELL ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|combout                                           ;
+;   14.204 ;   0.195 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|datad                                              ;
+;   14.648 ;   0.444 ; FF ; CELL ; 4      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|combout                                            ;
+;   15.147 ;   0.499 ; FF ; IC   ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|datac                                                   ;
+;   15.500 ;   0.353 ; FR ; CELL ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|combout                                                 ;
+;   15.697 ;   0.197 ; RR ; IC   ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|datac                                                   ;
+;   16.119 ;   0.422 ; RF ; CELL ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|combout                                                 ;
+;   16.832 ;   0.713 ; FF ; IC   ; 1      ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|datad                                                   ;
+;   17.186 ;   0.354 ; FR ; CELL ; 39     ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|combout                                                 ;
+;   17.414 ;   0.228 ; RR ; IC   ; 1      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|datab                                              ;
+;   17.911 ;   0.497 ; RR ; CELL ; 3      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|combout                                            ;
+;   18.539 ;   0.628 ; RR ; IC   ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|datac                                                   ;
+;   18.962 ;   0.423 ; RF ; CELL ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|combout                                                 ;
+;   19.162 ;   0.200 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|datac                                                    ;
+;   19.577 ;   0.415 ; FF ; CELL ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|combout                                                  ;
+;   19.783 ;   0.206 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|datad                                                   ;
+;   20.227 ;   0.444 ; FF ; CELL ; 12     ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|combout                                                 ;
+;   20.440 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|datad                                                     ;
+;   20.884 ;   0.444 ; FF ; CELL ; 47     ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|combout                                                   ;
+;   21.869 ;   0.985 ; FF ; IC   ; 1      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|dataf                                                   ;
+;   21.953 ;   0.084 ; FR ; CELL ; 2      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|combout                                                 ;
+;   22.256 ;   0.303 ; RR ; IC   ; 1      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|datad                                                   ;
+;   22.691 ;   0.435 ; RF ; CELL ; 2      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|combout                                                 ;
+;   22.920 ;   0.229 ; FF ; IC   ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|datac                                                   ;
+;   23.312 ;   0.392 ; FR ; CELL ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|combout                                                 ;
+;   23.784 ;   0.472 ; RR ; IC   ; 1      ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|datae                                                   ;
+;   24.047 ;   0.263 ; RF ; CELL ; 39     ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|combout                                                 ;
+;   24.592 ;   0.545 ; FF ; IC   ; 1      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|datac                                                   ;
+;   25.087 ;   0.495 ; FF ; CELL ; 3      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|combout                                                 ;
+;   25.570 ;   0.483 ; FF ; IC   ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|dataa                                                   ;
+;   26.030 ;   0.460 ; FR ; CELL ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|combout                                                 ;
+;   26.215 ;   0.185 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|datab                                                   ;
+;   26.713 ;   0.498 ; RF ; CELL ; 14     ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|combout                                                 ;
+;   27.296 ;   0.583 ; FF ; IC   ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|datae                                                   ;
+;   27.576 ;   0.280 ; FR ; CELL ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|combout                                                 ;
+;   28.061 ;   0.485 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|datae                                                    ;
+;   28.277 ;   0.216 ; RR ; CELL ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|combout                                                  ;
+;   28.776 ;   0.499 ; RR ; IC   ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|dataa                                                    ;
+;   29.279 ;   0.503 ; RF ; CELL ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|combout                                                  ;
+;   29.950 ;   0.671 ; FF ; IC   ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|datac                                                    ;
+;   30.299 ;   0.349 ; FR ; CELL ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|combout                                                  ;
+;   30.521 ;   0.222 ; RR ; IC   ; 1      ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|datac                                                   ;
+;   30.952 ;   0.431 ; RF ; CELL ; 42     ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|combout                                                 ;
+;   31.811 ;   0.859 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|datad                                                    ;
+;   32.251 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|combout                                                  ;
+;   32.492 ;   0.241 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|datac                                                    ;
+;   32.932 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|combout                                                  ;
+;   33.559 ;   0.627 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|datad                                                   ;
+;   33.996 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|combout                                                 ;
+;   34.182 ;   0.186 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|datac                                                     ;
+;   34.630 ;   0.448 ; FF ; CELL ; 58     ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|combout                                                   ;
+;   35.592 ;   0.962 ; FF ; IC   ; 1      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|dataf                                             ;
+;   35.670 ;   0.078 ; FF ; CELL ; 5      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|combout                                           ;
+;   36.726 ;   1.056 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|dataf                                                   ;
+;   36.800 ;   0.074 ; FF ; CELL ; 2      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|combout                                                 ;
+;   37.014 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|datac                                                   ;
+;   37.366 ;   0.352 ; FR ; CELL ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|combout                                                 ;
+;   38.047 ;   0.681 ; RR ; IC   ; 1      ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|datac                                                   ;
+;   38.478 ;   0.431 ; RF ; CELL ; 33     ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|combout                                                 ;
+;   39.329 ;   0.851 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|datad                                             ;
+;   39.770 ;   0.441 ; FF ; CELL ; 5      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|combout                                           ;
+;   39.984 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|datad                                                   ;
+;   40.421 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|combout                                                 ;
+;   40.583 ;   0.162 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|dataa                                                   ;
+;   41.063 ;   0.480 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|combout                                                 ;
+;   41.571 ;   0.508 ; FF ; IC   ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|datac                                                  ;
+;   42.011 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|combout                                                ;
+;   42.653 ;   0.642 ; FF ; IC   ; 1      ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|datad                                                     ;
+;   43.097 ;   0.444 ; FF ; CELL ; 58     ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|combout                                                   ;
+;   44.059 ;   0.962 ; FF ; IC   ; 1      ; LABCELL_X74_Y20_N36  ; u0|fpga_matching_core_0|u_book|buy_best_price~238|dataf                                             ;
+;   44.143 ;   0.084 ; FR ; CELL ; 3      ; LABCELL_X74_Y20_N36  ; u0|fpga_matching_core_0|u_book|buy_best_price~238|combout                                           ;
+;   44.384 ;   0.241 ; RR ; IC   ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|datad                                                   ;
+;   44.808 ;   0.424 ; RF ; CELL ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|combout                                                 ;
+;   45.007 ;   0.199 ; FF ; IC   ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|datad                                                   ;
+;   45.354 ;   0.347 ; FR ; CELL ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|combout                                                 ;
+;   46.024 ;   0.670 ; RR ; IC   ; 1      ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|datac                                                  ;
+;   46.455 ;   0.431 ; RF ; CELL ; 33     ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|combout                                                ;
+;   47.158 ;   0.703 ; FF ; IC   ; 1      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|datad                                             ;
+;   47.602 ;   0.444 ; FF ; CELL ; 4      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|combout                                           ;
+;   47.815 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|datac                                                  ;
+;   48.255 ;   0.440 ; FF ; CELL ; 3      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|combout                                                ;
+;   48.982 ;   0.727 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|datad                                                  ;
+;   49.342 ;   0.360 ; FR ; CELL ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|combout                                                ;
+;   49.529 ;   0.187 ; RR ; IC   ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|dataa                                                  ;
+;   50.026 ;   0.497 ; RF ; CELL ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|combout                                                ;
+;   50.224 ;   0.198 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|dataf                                                     ;
+;   50.302 ;   0.078 ; FF ; CELL ; 58     ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|combout                                                   ;
+;   51.234 ;   0.932 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|dataa                                             ;
+;   51.705 ;   0.471 ; FR ; CELL ; 4      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|combout                                           ;
+;   51.924 ;   0.219 ; RR ; IC   ; 1      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|datad                                                  ;
+;   52.348 ;   0.424 ; RF ; CELL ; 2      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|combout                                                ;
+;   52.566 ;   0.218 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|datad                                                  ;
+;   52.913 ;   0.347 ; FR ; CELL ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|combout                                                ;
+;   53.491 ;   0.578 ; RR ; IC   ; 1      ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|datad                                                  ;
+;   53.922 ;   0.431 ; RF ; CELL ; 34     ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|combout                                                ;
+;   54.641 ;   0.719 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|dataa                                             ;
+;   55.131 ;   0.490 ; FR ; CELL ; 4      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|combout                                           ;
+;   55.361 ;   0.230 ; RR ; IC   ; 1      ; LABCELL_X63_Y19_N42  ; u0|fpga_matching_core_0|u_book|LessThan14~5|datac                                                   ;
+;   55.786 ;   0.425 ; RF ; CELL ; 1      ; LABCELL_X63_Y19_N42  ; u0|fpga_matching_core_0|u_book|LessThan14~5|combout                                                 ;
+;   55.988 ;   0.202 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|datad                                                   ;
+;   56.424 ;   0.436 ; FF ; CELL ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|combout                                                 ;
+;   57.050 ;   0.626 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|datad                                                  ;
+;   57.487 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|combout                                                ;
+;   57.675 ;   0.188 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|dataf                                                     ;
+;   57.753 ;   0.078 ; FF ; CELL ; 42     ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|combout                                                   ;
+;   58.523 ;   0.770 ; FF ; IC   ; 1      ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|datae                                                   ;
+;   58.713 ;   0.190 ; FF ; CELL ; 165    ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|combout                                                 ;
+;   60.225 ;   1.512 ; FF ; IC   ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|datad                                                        ;
+;   60.661 ;   0.436 ; FF ; CELL ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|combout                                                      ;
+;   61.488 ;   0.827 ; FF ; IC   ; 1      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|dataf                                                        ;
+;   61.559 ;   0.071 ; FF ; CELL ; 2      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|combout                                                      ;
+;   62.354 ;   0.795 ; FF ; IC   ; 1      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|datae                                             ;
+;   62.528 ;   0.174 ; FF ; CELL ; 7      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|combout                                           ;
+;   63.230 ;   0.702 ; FF ; IC   ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|dataf                                                  ;
+;   63.303 ;   0.073 ; FF ; CELL ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|combout                                                ;
+;   64.072 ;   0.769 ; FF ; IC   ; 1      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|datae                                                  ;
+;   64.269 ;   0.197 ; FR ; CELL ; 2      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|combout                                                ;
+;   64.818 ;   0.549 ; RR ; IC   ; 1      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|dataf                                                  ;
+;   64.902 ;   0.084 ; RF ; CELL ; 4      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|combout                                                ;
+;   65.124 ;   0.222 ; FF ; IC   ; 1      ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|dataf                                                  ;
+;   65.210 ;   0.086 ; FR ; CELL ; 15     ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|combout                                                ;
+;   65.848 ;   0.638 ; RR ; IC   ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|dataf                                                      ;
+;   65.931 ;   0.083 ; RF ; CELL ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|combout                                                    ;
+;   66.364 ;   0.433 ; FF ; IC   ; 1      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|datab                                                      ;
+;   66.829 ;   0.465 ; FR ; CELL ; 6      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|combout                                                    ;
+;   67.123 ;   0.294 ; RR ; IC   ; 1      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|dataa                                          ;
+;   67.628 ;   0.505 ; RF ; CELL ; 8      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|combout                                        ;
+;   68.662 ;   1.034 ; FF ; IC   ; 1      ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|dataf                                          ;
+;   68.737 ;   0.075 ; FF ; CELL ; 32     ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|combout                                        ;
+;   70.147 ;   1.410 ; FF ; IC   ; 1      ; FF_X57_Y27_N26       ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|ena                                              ;
+;   70.719 ;   0.572 ; FF ; CELL ; 1      ; FF_X57_Y27_N26       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Required Path                                                                                                                                               ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location         ; Element                                                                                             ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; 20.000   ; 20.000  ;    ;      ;        ;                  ; latch edge time                                                                                     ;
+; 23.321   ; 3.321   ;    ;      ;        ;                  ; clock path                                                                                          ;
+;   20.000 ;   0.000 ;    ;      ;        ;                  ; source latency                                                                                      ;
+;   20.000 ;   0.000 ;    ;      ; 1      ; PIN_AF14         ; CLOCK_50                                                                                            ;
+;   20.000 ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|i                                                                                    ;
+;   20.661 ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|o                                                                                    ;
+;   20.989 ;   0.328 ; RR ; IC   ; 1      ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   21.241 ;   0.252 ; RR ; CELL ; 13724  ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   22.874 ;   1.633 ; RR ; IC   ; 1      ; FF_X57_Y27_N26   ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|clk                                              ;
+;   23.281 ;   0.407 ; RR ; CELL ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+;   23.321 ;   0.040 ;    ;      ;        ;                  ; clock pessimism removed                                                                             ;
+; 23.151   ; -0.170  ;    ;      ;        ;                  ; clock uncertainty                                                                                   ;
+; 23.151   ; 0.000   ;    ; uTsu ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+
+----------------------------
+; Extra Fitter Information ;
+----------------------------
+HTML report is unavailable in plain text report export.
+
+
+Path #4: Setup slack is -47.567 (VIOLATED)
+===============================================================================
++--------------------------------------------------------------------------------------------------------------------------+
+; Path Summary                                                                                                             ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; Property           ; Value                                                                                               ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; From Node          ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_valid[0]        ;
+; To Node            ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+; Launch Clock       ; CLOCK_50                                                                                            ;
+; Latch Clock        ; CLOCK_50                                                                                            ;
+; Data Arrival Time  ; 70.718                                                                                              ;
+; Data Required Time ; 23.151                                                                                              ;
+; Slack              ; -47.567 (VIOLATED)                                                                                  ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------+
+; Statistics                                                                         ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Property               ; Value  ; Count ; Total Delay ; % of Total ; Min   ; Max   ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Setup Relationship     ; 20.000 ;       ;             ;            ;       ;       ;
+; Clock Skew             ; -0.469 ;       ;             ;            ;       ;       ;
+; Data Delay             ; 66.928 ;       ;             ;            ;       ;       ;
+; Number of Logic Levels ;        ; 76    ;             ;            ;       ;       ;
+; Physical Delays        ;        ;       ;             ;            ;       ;       ;
+;  Arrival Path          ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 2.387       ; 63         ; 0.000 ; 2.040 ;
+;    Cell                ;        ; 3     ; 1.403       ; 37         ; 0.273 ; 0.661 ;
+;   Data                 ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 77    ; 40.112      ; 60         ; 0.162 ; 1.512 ;
+;    Cell                ;        ; 78    ; 26.816      ; 40         ; 0.000 ; 0.572 ;
+;    uTco                ;        ; 1     ; 0.000       ; 0          ; 0.000 ; 0.000 ;
+;  Required Path         ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 1.961       ; 60         ; 0.000 ; 1.633 ;
+;    Cell                ;        ; 3     ; 1.320       ; 40         ; 0.252 ; 0.661 ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+Note: Negative delays are omitted from totals when calculating percentages
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Arrival Path                                                                                                                                                    ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location             ; Element                                                                                             ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; 0.000    ; 0.000   ;    ;      ;        ;                      ; launch edge time                                                                                    ;
+; 3.790    ; 3.790   ;    ;      ;        ;                      ; clock path                                                                                          ;
+;   0.000  ;   0.000 ;    ;      ;        ;                      ; source latency                                                                                      ;
+;   0.000  ;   0.000 ;    ;      ; 1      ; PIN_AF14             ; CLOCK_50                                                                                            ;
+;   0.000  ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|i                                                                                    ;
+;   0.661  ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|o                                                                                    ;
+;   1.008  ;   0.347 ; RR ; IC   ; 1      ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   1.281  ;   0.273 ; RR ; CELL ; 13724  ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   3.321  ;   2.040 ; RR ; IC   ; 1      ; FF_X84_Y14_N28       ; u0|fpga_matching_core_0|u_book|buy_valid[0]|clk                                                     ;
+;   3.790  ;   0.469 ; RR ; CELL ; 1      ; FF_X84_Y14_N28       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_valid[0]        ;
+; 70.718   ; 66.928  ;    ;      ;        ;                      ; data path                                                                                           ;
+;   3.790  ;   0.000 ;    ; uTco ; 1      ; FF_X84_Y14_N28       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_valid[0]        ;
+;   3.790  ;   0.000 ; FF ; CELL ; 40     ; FF_X84_Y14_N28       ; u0|fpga_matching_core_0|u_book|buy_valid[0]|q                                                       ;
+;   4.619  ;   0.829 ; FF ; IC   ; 1      ; LABCELL_X85_Y16_N33  ; u0|fpga_matching_core_0|u_book|LessThan0~27|datad                                                   ;
+;   4.920  ;   0.301 ; FF ; CELL ; 2      ; LABCELL_X85_Y16_N33  ; u0|fpga_matching_core_0|u_book|LessThan0~27|combout                                                 ;
+;   5.767  ;   0.847 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|datad                                                   ;
+;   6.069  ;   0.302 ; FR ; CELL ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|combout                                                 ;
+;   6.283  ;   0.214 ; RR ; IC   ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|datad                                                   ;
+;   6.707  ;   0.424 ; RF ; CELL ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|combout                                                 ;
+;   6.905  ;   0.198 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|datad                                                      ;
+;   7.264  ;   0.359 ; FR ; CELL ; 57     ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|combout                                                    ;
+;   7.880  ;   0.616 ; RR ; IC   ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|dataa                                                    ;
+;   8.361  ;   0.481 ; RF ; CELL ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|combout                                                  ;
+;   8.586  ;   0.225 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|datac                                                   ;
+;   9.020  ;   0.434 ; FF ; CELL ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|combout                                                 ;
+;   9.343  ;   0.323 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|datac                                                    ;
+;   9.660  ;   0.317 ; FR ; CELL ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|combout                                                  ;
+;   10.319 ;   0.659 ; RR ; IC   ; 1      ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|dataf                                                   ;
+;   10.408 ;   0.089 ; RF ; CELL ; 39     ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|combout                                                 ;
+;   10.637 ;   0.229 ; FF ; IC   ; 1      ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|datad                                                     ;
+;   10.928 ;   0.291 ; FF ; CELL ; 53     ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|combout                                                   ;
+;   11.786 ;   0.858 ; FF ; IC   ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|datad                                                   ;
+;   12.145 ;   0.359 ; FR ; CELL ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|combout                                                 ;
+;   12.590 ;   0.445 ; RR ; IC   ; 1      ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|datac                                                   ;
+;   13.025 ;   0.435 ; RF ; CELL ; 14     ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|combout                                                 ;
+;   13.824 ;   0.799 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|datae                                             ;
+;   14.009 ;   0.185 ; FF ; CELL ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|combout                                           ;
+;   14.204 ;   0.195 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|datad                                              ;
+;   14.648 ;   0.444 ; FF ; CELL ; 4      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|combout                                            ;
+;   15.147 ;   0.499 ; FF ; IC   ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|datac                                                   ;
+;   15.500 ;   0.353 ; FR ; CELL ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|combout                                                 ;
+;   15.697 ;   0.197 ; RR ; IC   ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|datac                                                   ;
+;   16.119 ;   0.422 ; RF ; CELL ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|combout                                                 ;
+;   16.832 ;   0.713 ; FF ; IC   ; 1      ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|datad                                                   ;
+;   17.186 ;   0.354 ; FR ; CELL ; 39     ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|combout                                                 ;
+;   17.414 ;   0.228 ; RR ; IC   ; 1      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|datab                                              ;
+;   17.911 ;   0.497 ; RR ; CELL ; 3      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|combout                                            ;
+;   18.539 ;   0.628 ; RR ; IC   ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|datac                                                   ;
+;   18.962 ;   0.423 ; RF ; CELL ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|combout                                                 ;
+;   19.162 ;   0.200 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|datac                                                    ;
+;   19.577 ;   0.415 ; FF ; CELL ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|combout                                                  ;
+;   19.783 ;   0.206 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|datad                                                   ;
+;   20.227 ;   0.444 ; FF ; CELL ; 12     ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|combout                                                 ;
+;   20.440 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|datad                                                     ;
+;   20.884 ;   0.444 ; FF ; CELL ; 47     ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|combout                                                   ;
+;   21.869 ;   0.985 ; FF ; IC   ; 1      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|dataf                                                   ;
+;   21.953 ;   0.084 ; FR ; CELL ; 2      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|combout                                                 ;
+;   22.256 ;   0.303 ; RR ; IC   ; 1      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|datad                                                   ;
+;   22.691 ;   0.435 ; RF ; CELL ; 2      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|combout                                                 ;
+;   22.920 ;   0.229 ; FF ; IC   ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|datac                                                   ;
+;   23.312 ;   0.392 ; FR ; CELL ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|combout                                                 ;
+;   23.784 ;   0.472 ; RR ; IC   ; 1      ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|datae                                                   ;
+;   24.047 ;   0.263 ; RF ; CELL ; 39     ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|combout                                                 ;
+;   24.592 ;   0.545 ; FF ; IC   ; 1      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|datac                                                   ;
+;   25.087 ;   0.495 ; FF ; CELL ; 3      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|combout                                                 ;
+;   25.570 ;   0.483 ; FF ; IC   ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|dataa                                                   ;
+;   26.030 ;   0.460 ; FR ; CELL ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|combout                                                 ;
+;   26.215 ;   0.185 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|datab                                                   ;
+;   26.713 ;   0.498 ; RF ; CELL ; 14     ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|combout                                                 ;
+;   27.296 ;   0.583 ; FF ; IC   ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|datae                                                   ;
+;   27.576 ;   0.280 ; FR ; CELL ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|combout                                                 ;
+;   28.061 ;   0.485 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|datae                                                    ;
+;   28.277 ;   0.216 ; RR ; CELL ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|combout                                                  ;
+;   28.776 ;   0.499 ; RR ; IC   ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|dataa                                                    ;
+;   29.279 ;   0.503 ; RF ; CELL ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|combout                                                  ;
+;   29.950 ;   0.671 ; FF ; IC   ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|datac                                                    ;
+;   30.299 ;   0.349 ; FR ; CELL ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|combout                                                  ;
+;   30.521 ;   0.222 ; RR ; IC   ; 1      ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|datac                                                   ;
+;   30.952 ;   0.431 ; RF ; CELL ; 42     ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|combout                                                 ;
+;   31.811 ;   0.859 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|datad                                                    ;
+;   32.251 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|combout                                                  ;
+;   32.492 ;   0.241 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|datac                                                    ;
+;   32.932 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|combout                                                  ;
+;   33.559 ;   0.627 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|datad                                                   ;
+;   33.996 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|combout                                                 ;
+;   34.182 ;   0.186 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|datac                                                     ;
+;   34.630 ;   0.448 ; FF ; CELL ; 58     ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|combout                                                   ;
+;   35.592 ;   0.962 ; FF ; IC   ; 1      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|dataf                                             ;
+;   35.670 ;   0.078 ; FF ; CELL ; 5      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|combout                                           ;
+;   36.726 ;   1.056 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|dataf                                                   ;
+;   36.800 ;   0.074 ; FF ; CELL ; 2      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|combout                                                 ;
+;   37.014 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|datac                                                   ;
+;   37.366 ;   0.352 ; FR ; CELL ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|combout                                                 ;
+;   38.047 ;   0.681 ; RR ; IC   ; 1      ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|datac                                                   ;
+;   38.478 ;   0.431 ; RF ; CELL ; 33     ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|combout                                                 ;
+;   39.329 ;   0.851 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|datad                                             ;
+;   39.770 ;   0.441 ; FF ; CELL ; 5      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|combout                                           ;
+;   39.984 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|datad                                                   ;
+;   40.421 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|combout                                                 ;
+;   40.583 ;   0.162 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|dataa                                                   ;
+;   41.063 ;   0.480 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|combout                                                 ;
+;   41.571 ;   0.508 ; FF ; IC   ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|datac                                                  ;
+;   42.011 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|combout                                                ;
+;   42.653 ;   0.642 ; FF ; IC   ; 1      ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|datad                                                     ;
+;   43.097 ;   0.444 ; FF ; CELL ; 58     ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|combout                                                   ;
+;   44.059 ;   0.962 ; FF ; IC   ; 1      ; LABCELL_X74_Y20_N36  ; u0|fpga_matching_core_0|u_book|buy_best_price~238|dataf                                             ;
+;   44.143 ;   0.084 ; FR ; CELL ; 3      ; LABCELL_X74_Y20_N36  ; u0|fpga_matching_core_0|u_book|buy_best_price~238|combout                                           ;
+;   44.384 ;   0.241 ; RR ; IC   ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|datad                                                   ;
+;   44.808 ;   0.424 ; RF ; CELL ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|combout                                                 ;
+;   45.007 ;   0.199 ; FF ; IC   ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|datad                                                   ;
+;   45.354 ;   0.347 ; FR ; CELL ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|combout                                                 ;
+;   46.024 ;   0.670 ; RR ; IC   ; 1      ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|datac                                                  ;
+;   46.455 ;   0.431 ; RF ; CELL ; 33     ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|combout                                                ;
+;   47.158 ;   0.703 ; FF ; IC   ; 1      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|datad                                             ;
+;   47.602 ;   0.444 ; FF ; CELL ; 4      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|combout                                           ;
+;   47.815 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|datac                                                  ;
+;   48.255 ;   0.440 ; FF ; CELL ; 3      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|combout                                                ;
+;   48.982 ;   0.727 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|datad                                                  ;
+;   49.342 ;   0.360 ; FR ; CELL ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|combout                                                ;
+;   49.529 ;   0.187 ; RR ; IC   ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|dataa                                                  ;
+;   50.026 ;   0.497 ; RF ; CELL ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|combout                                                ;
+;   50.224 ;   0.198 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|dataf                                                     ;
+;   50.302 ;   0.078 ; FF ; CELL ; 58     ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|combout                                                   ;
+;   51.234 ;   0.932 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|dataa                                             ;
+;   51.705 ;   0.471 ; FR ; CELL ; 4      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|combout                                           ;
+;   51.924 ;   0.219 ; RR ; IC   ; 1      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|datad                                                  ;
+;   52.348 ;   0.424 ; RF ; CELL ; 2      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|combout                                                ;
+;   52.566 ;   0.218 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|datad                                                  ;
+;   52.913 ;   0.347 ; FR ; CELL ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|combout                                                ;
+;   53.491 ;   0.578 ; RR ; IC   ; 1      ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|datad                                                  ;
+;   53.922 ;   0.431 ; RF ; CELL ; 34     ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|combout                                                ;
+;   54.641 ;   0.719 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|dataa                                             ;
+;   55.131 ;   0.490 ; FR ; CELL ; 4      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|combout                                           ;
+;   55.350 ;   0.219 ; RR ; IC   ; 1      ; LABCELL_X63_Y19_N12  ; u0|fpga_matching_core_0|u_book|LessThan14~4|datac                                                   ;
+;   55.775 ;   0.425 ; RF ; CELL ; 1      ; LABCELL_X63_Y19_N12  ; u0|fpga_matching_core_0|u_book|LessThan14~4|combout                                                 ;
+;   55.947 ;   0.172 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|datab                                                   ;
+;   56.423 ;   0.476 ; FF ; CELL ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|combout                                                 ;
+;   57.049 ;   0.626 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|datad                                                  ;
+;   57.486 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|combout                                                ;
+;   57.674 ;   0.188 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|dataf                                                     ;
+;   57.752 ;   0.078 ; FF ; CELL ; 42     ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|combout                                                   ;
+;   58.522 ;   0.770 ; FF ; IC   ; 1      ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|datae                                                   ;
+;   58.712 ;   0.190 ; FF ; CELL ; 165    ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|combout                                                 ;
+;   60.224 ;   1.512 ; FF ; IC   ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|datad                                                        ;
+;   60.660 ;   0.436 ; FF ; CELL ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|combout                                                      ;
+;   61.487 ;   0.827 ; FF ; IC   ; 1      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|dataf                                                        ;
+;   61.558 ;   0.071 ; FF ; CELL ; 2      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|combout                                                      ;
+;   62.353 ;   0.795 ; FF ; IC   ; 1      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|datae                                             ;
+;   62.527 ;   0.174 ; FF ; CELL ; 7      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|combout                                           ;
+;   63.229 ;   0.702 ; FF ; IC   ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|dataf                                                  ;
+;   63.302 ;   0.073 ; FF ; CELL ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|combout                                                ;
+;   64.071 ;   0.769 ; FF ; IC   ; 1      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|datae                                                  ;
+;   64.268 ;   0.197 ; FR ; CELL ; 2      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|combout                                                ;
+;   64.817 ;   0.549 ; RR ; IC   ; 1      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|dataf                                                  ;
+;   64.901 ;   0.084 ; RF ; CELL ; 4      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|combout                                                ;
+;   65.123 ;   0.222 ; FF ; IC   ; 1      ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|dataf                                                  ;
+;   65.209 ;   0.086 ; FR ; CELL ; 15     ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|combout                                                ;
+;   65.847 ;   0.638 ; RR ; IC   ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|dataf                                                      ;
+;   65.930 ;   0.083 ; RF ; CELL ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|combout                                                    ;
+;   66.363 ;   0.433 ; FF ; IC   ; 1      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|datab                                                      ;
+;   66.828 ;   0.465 ; FR ; CELL ; 6      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|combout                                                    ;
+;   67.122 ;   0.294 ; RR ; IC   ; 1      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|dataa                                          ;
+;   67.627 ;   0.505 ; RF ; CELL ; 8      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|combout                                        ;
+;   68.661 ;   1.034 ; FF ; IC   ; 1      ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|dataf                                          ;
+;   68.736 ;   0.075 ; FF ; CELL ; 32     ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|combout                                        ;
+;   70.146 ;   1.410 ; FF ; IC   ; 1      ; FF_X57_Y27_N26       ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|ena                                              ;
+;   70.718 ;   0.572 ; FF ; CELL ; 1      ; FF_X57_Y27_N26       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Required Path                                                                                                                                               ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location         ; Element                                                                                             ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; 20.000   ; 20.000  ;    ;      ;        ;                  ; latch edge time                                                                                     ;
+; 23.321   ; 3.321   ;    ;      ;        ;                  ; clock path                                                                                          ;
+;   20.000 ;   0.000 ;    ;      ;        ;                  ; source latency                                                                                      ;
+;   20.000 ;   0.000 ;    ;      ; 1      ; PIN_AF14         ; CLOCK_50                                                                                            ;
+;   20.000 ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|i                                                                                    ;
+;   20.661 ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|o                                                                                    ;
+;   20.989 ;   0.328 ; RR ; IC   ; 1      ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   21.241 ;   0.252 ; RR ; CELL ; 13724  ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   22.874 ;   1.633 ; RR ; IC   ; 1      ; FF_X57_Y27_N26   ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|clk                                              ;
+;   23.281 ;   0.407 ; RR ; CELL ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+;   23.321 ;   0.040 ;    ;      ;        ;                  ; clock pessimism removed                                                                             ;
+; 23.151   ; -0.170  ;    ;      ;        ;                  ; clock uncertainty                                                                                   ;
+; 23.151   ; 0.000   ;    ; uTsu ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+
+----------------------------
+; Extra Fitter Information ;
+----------------------------
+HTML report is unavailable in plain text report export.
+
+
+Path #5: Setup slack is -47.552 (VIOLATED)
+===============================================================================
++--------------------------------------------------------------------------------------------------------------------------+
+; Path Summary                                                                                                             ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; Property           ; Value                                                                                               ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+; From Node          ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21]    ;
+; To Node            ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+; Launch Clock       ; CLOCK_50                                                                                            ;
+; Latch Clock        ; CLOCK_50                                                                                            ;
+; Data Arrival Time  ; 70.703                                                                                              ;
+; Data Required Time ; 23.151                                                                                              ;
+; Slack              ; -47.552 (VIOLATED)                                                                                  ;
++--------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------+
+; Statistics                                                                         ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Property               ; Value  ; Count ; Total Delay ; % of Total ; Min   ; Max   ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+; Setup Relationship     ; 20.000 ;       ;             ;            ;       ;       ;
+; Clock Skew             ; -0.477 ;       ;             ;            ;       ;       ;
+; Data Delay             ; 66.905 ;       ;             ;            ;       ;       ;
+; Number of Logic Levels ;        ; 76    ;             ;            ;       ;       ;
+; Physical Delays        ;        ;       ;             ;            ;       ;       ;
+;  Arrival Path          ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 2.389       ; 63         ; 0.000 ; 2.042 ;
+;    Cell                ;        ; 3     ; 1.409       ; 37         ; 0.273 ; 0.661 ;
+;   Data                 ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 77    ; 40.091      ; 60         ; 0.162 ; 1.512 ;
+;    Cell                ;        ; 78    ; 26.814      ; 40         ; 0.000 ; 0.572 ;
+;    uTco                ;        ; 1     ; 0.000       ; 0          ; 0.000 ; 0.000 ;
+;  Required Path         ;        ;       ;             ;            ;       ;       ;
+;   Clock                ;        ;       ;             ;            ;       ;       ;
+;    IC                  ;        ; 3     ; 1.961       ; 60         ; 0.000 ; 1.633 ;
+;    Cell                ;        ; 3     ; 1.320       ; 40         ; 0.252 ; 0.661 ;
++------------------------+--------+-------+-------------+------------+-------+-------+
+Note: Negative delays are omitted from totals when calculating percentages
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Arrival Path                                                                                                                                                    ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location             ; Element                                                                                             ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+; 0.000    ; 0.000   ;    ;      ;        ;                      ; launch edge time                                                                                    ;
+; 3.798    ; 3.798   ;    ;      ;        ;                      ; clock path                                                                                          ;
+;   0.000  ;   0.000 ;    ;      ;        ;                      ; source latency                                                                                      ;
+;   0.000  ;   0.000 ;    ;      ; 1      ; PIN_AF14             ; CLOCK_50                                                                                            ;
+;   0.000  ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|i                                                                                    ;
+;   0.661  ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1     ; CLOCK_50~input|o                                                                                    ;
+;   1.008  ;   0.347 ; RR ; IC   ; 1      ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   1.281  ;   0.273 ; RR ; CELL ; 13724  ; CLKCTRL_G6           ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   3.323  ;   2.042 ; RR ; IC   ; 1      ; FF_X85_Y16_N32       ; u0|fpga_matching_core_0|u_book|buy_price[0][21]|clk                                                 ;
+;   3.798  ;   0.475 ; RR ; CELL ; 1      ; FF_X85_Y16_N32       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21]    ;
+; 70.703   ; 66.905  ;    ;      ;        ;                      ; data path                                                                                           ;
+;   3.798  ;   0.000 ;    ; uTco ; 1      ; FF_X85_Y16_N32       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|buy_price[0][21]    ;
+;   3.798  ;   0.000 ; FF ; CELL ; 4      ; FF_X85_Y16_N32       ; u0|fpga_matching_core_0|u_book|buy_price[0][21]|q                                                   ;
+;   4.330  ;   0.532 ; FF ; IC   ; 1      ; LABCELL_X85_Y16_N24  ; u0|fpga_matching_core_0|u_book|LessThan0~24|datac                                                   ;
+;   4.749  ;   0.419 ; FF ; CELL ; 4      ; LABCELL_X85_Y16_N24  ; u0|fpga_matching_core_0|u_book|LessThan0~24|combout                                                 ;
+;   5.583  ;   0.834 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|datac                                                   ;
+;   5.998  ;   0.415 ; FF ; CELL ; 1      ; MLABCELL_X84_Y13_N42 ; u0|fpga_matching_core_0|u_book|LessThan0~31|combout                                                 ;
+;   6.198  ;   0.200 ; FF ; IC   ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|datad                                                   ;
+;   6.547  ;   0.349 ; FR ; CELL ; 1      ; MLABCELL_X84_Y13_N18 ; u0|fpga_matching_core_0|u_book|LessThan0~36|combout                                                 ;
+;   6.765  ;   0.218 ; RR ; IC   ; 1      ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|datad                                                      ;
+;   7.196  ;   0.431 ; RF ; CELL ; 57     ; MLABCELL_X84_Y13_N15 ; u0|fpga_matching_core_0|u_book|always0~2|combout                                                    ;
+;   7.913  ;   0.717 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|dataa                                                    ;
+;   8.372  ;   0.459 ; FF ; CELL ; 1      ; MLABCELL_X84_Y12_N39 ; u0|fpga_matching_core_0|u_book|LessThan1~1|combout                                                  ;
+;   8.597  ;   0.225 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|datac                                                   ;
+;   9.031  ;   0.434 ; FF ; CELL ; 1      ; MLABCELL_X84_Y12_N9  ; u0|fpga_matching_core_0|u_book|LessThan1~40|combout                                                 ;
+;   9.354  ;   0.323 ; FF ; IC   ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|datac                                                    ;
+;   9.671  ;   0.317 ; FR ; CELL ; 1      ; MLABCELL_X84_Y12_N42 ; u0|fpga_matching_core_0|u_book|LessThan1~2|combout                                                  ;
+;   10.330 ;   0.659 ; RR ; IC   ; 1      ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|dataf                                                   ;
+;   10.419 ;   0.089 ; RF ; CELL ; 39     ; LABCELL_X83_Y15_N3   ; u0|fpga_matching_core_0|u_book|LessThan1~31|combout                                                 ;
+;   10.648 ;   0.229 ; FF ; IC   ; 1      ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|datad                                                     ;
+;   10.939 ;   0.291 ; FF ; CELL ; 53     ; LABCELL_X83_Y15_N30  ; u0|fpga_matching_core_0|u_book|always0~11|combout                                                   ;
+;   11.797 ;   0.858 ; FF ; IC   ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|datad                                                   ;
+;   12.156 ;   0.359 ; FR ; CELL ; 1      ; MLABCELL_X82_Y16_N3  ; u0|fpga_matching_core_0|u_book|LessThan2~46|combout                                                 ;
+;   12.601 ;   0.445 ; RR ; IC   ; 1      ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|datac                                                   ;
+;   13.036 ;   0.435 ; RF ; CELL ; 14     ; MLABCELL_X82_Y15_N30 ; u0|fpga_matching_core_0|u_book|LessThan2~49|combout                                                 ;
+;   13.835 ;   0.799 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|datae                                             ;
+;   14.020 ;   0.185 ; FF ; CELL ; 1      ; LABCELL_X80_Y18_N6   ; u0|fpga_matching_core_0|u_book|buy_best_price~352|combout                                           ;
+;   14.215 ;   0.195 ; FF ; IC   ; 1      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|datad                                              ;
+;   14.659 ;   0.444 ; FF ; CELL ; 4      ; LABCELL_X80_Y18_N12  ; u0|fpga_matching_core_0|u_book|buy_best_price~79|combout                                            ;
+;   15.158 ;   0.499 ; FF ; IC   ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|datac                                                   ;
+;   15.511 ;   0.353 ; FR ; CELL ; 1      ; LABCELL_X81_Y16_N42  ; u0|fpga_matching_core_0|u_book|LessThan3~14|combout                                                 ;
+;   15.708 ;   0.197 ; RR ; IC   ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|datac                                                   ;
+;   16.130 ;   0.422 ; RF ; CELL ; 1      ; LABCELL_X81_Y16_N51  ; u0|fpga_matching_core_0|u_book|LessThan3~16|combout                                                 ;
+;   16.843 ;   0.713 ; FF ; IC   ; 1      ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|datad                                                   ;
+;   17.197 ;   0.354 ; FR ; CELL ; 39     ; LABCELL_X80_Y15_N12  ; u0|fpga_matching_core_0|u_book|LessThan3~34|combout                                                 ;
+;   17.425 ;   0.228 ; RR ; IC   ; 1      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|datab                                              ;
+;   17.922 ;   0.497 ; RR ; CELL ; 3      ; LABCELL_X80_Y15_N45  ; u0|fpga_matching_core_0|u_book|buy_best_price~98|combout                                            ;
+;   18.550 ;   0.628 ; RR ; IC   ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|datac                                                   ;
+;   18.973 ;   0.423 ; RF ; CELL ; 1      ; LABCELL_X81_Y17_N51  ; u0|fpga_matching_core_0|u_book|LessThan4~69|combout                                                 ;
+;   19.173 ;   0.200 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|datac                                                    ;
+;   19.588 ;   0.415 ; FF ; CELL ; 1      ; LABCELL_X81_Y17_N6   ; u0|fpga_matching_core_0|u_book|LessThan4~7|combout                                                  ;
+;   19.794 ;   0.206 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|datad                                                   ;
+;   20.238 ;   0.444 ; FF ; CELL ; 12     ; LABCELL_X81_Y17_N30  ; u0|fpga_matching_core_0|u_book|LessThan4~28|combout                                                 ;
+;   20.451 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|datad                                                     ;
+;   20.895 ;   0.444 ; FF ; CELL ; 47     ; LABCELL_X81_Y17_N12  ; u0|fpga_matching_core_0|u_book|always0~30|combout                                                   ;
+;   21.880 ;   0.985 ; FF ; IC   ; 1      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|dataf                                                   ;
+;   21.964 ;   0.084 ; FR ; CELL ; 2      ; LABCELL_X85_Y19_N27  ; u0|fpga_matching_core_0|u_book|LessThan5~17|combout                                                 ;
+;   22.267 ;   0.303 ; RR ; IC   ; 1      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|datad                                                   ;
+;   22.702 ;   0.435 ; RF ; CELL ; 2      ; MLABCELL_X84_Y19_N9  ; u0|fpga_matching_core_0|u_book|LessThan5~20|combout                                                 ;
+;   22.931 ;   0.229 ; FF ; IC   ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|datac                                                   ;
+;   23.323 ;   0.392 ; FR ; CELL ; 1      ; MLABCELL_X84_Y19_N51 ; u0|fpga_matching_core_0|u_book|LessThan5~26|combout                                                 ;
+;   23.795 ;   0.472 ; RR ; IC   ; 1      ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|datae                                                   ;
+;   24.058 ;   0.263 ; RF ; CELL ; 39     ; MLABCELL_X82_Y19_N0  ; u0|fpga_matching_core_0|u_book|LessThan5~33|combout                                                 ;
+;   24.603 ;   0.545 ; FF ; IC   ; 1      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|datac                                                   ;
+;   25.098 ;   0.495 ; FF ; CELL ; 3      ; MLABCELL_X82_Y21_N3  ; u0|fpga_matching_core_0|u_book|LessThan6~37|combout                                                 ;
+;   25.581 ;   0.483 ; FF ; IC   ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|dataa                                                   ;
+;   26.041 ;   0.460 ; FR ; CELL ; 1      ; MLABCELL_X82_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan6~45|combout                                                 ;
+;   26.226 ;   0.185 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|datab                                                   ;
+;   26.724 ;   0.498 ; RF ; CELL ; 14     ; MLABCELL_X82_Y20_N42 ; u0|fpga_matching_core_0|u_book|LessThan6~49|combout                                                 ;
+;   27.307 ;   0.583 ; FF ; IC   ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|datae                                                   ;
+;   27.587 ;   0.280 ; FR ; CELL ; 1      ; LABCELL_X80_Y20_N39  ; u0|fpga_matching_core_0|u_book|LessThan7~51|combout                                                 ;
+;   28.072 ;   0.485 ; RR ; IC   ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|datae                                                    ;
+;   28.288 ;   0.216 ; RR ; CELL ; 1      ; MLABCELL_X82_Y20_N6  ; u0|fpga_matching_core_0|u_book|LessThan7~2|combout                                                  ;
+;   28.787 ;   0.499 ; RR ; IC   ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|dataa                                                    ;
+;   29.290 ;   0.503 ; RF ; CELL ; 1      ; LABCELL_X80_Y20_N48  ; u0|fpga_matching_core_0|u_book|LessThan7~3|combout                                                  ;
+;   29.961 ;   0.671 ; FF ; IC   ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|datac                                                    ;
+;   30.310 ;   0.349 ; FR ; CELL ; 1      ; LABCELL_X80_Y21_N21  ; u0|fpga_matching_core_0|u_book|LessThan7~6|combout                                                  ;
+;   30.532 ;   0.222 ; RR ; IC   ; 1      ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|datac                                                   ;
+;   30.963 ;   0.431 ; RF ; CELL ; 42     ; LABCELL_X80_Y21_N6   ; u0|fpga_matching_core_0|u_book|LessThan7~34|combout                                                 ;
+;   31.822 ;   0.859 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|datad                                                    ;
+;   32.262 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N33  ; u0|fpga_matching_core_0|u_book|LessThan8~5|combout                                                  ;
+;   32.503 ;   0.241 ; FF ; IC   ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|datac                                                    ;
+;   32.943 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X79_Y20_N12  ; u0|fpga_matching_core_0|u_book|LessThan8~6|combout                                                  ;
+;   33.570 ;   0.627 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|datad                                                   ;
+;   34.007 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X79_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan8~31|combout                                                 ;
+;   34.193 ;   0.186 ; FF ; IC   ; 1      ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|datac                                                     ;
+;   34.641 ;   0.448 ; FF ; CELL ; 58     ; LABCELL_X79_Y22_N12  ; u0|fpga_matching_core_0|u_book|always0~52|combout                                                   ;
+;   35.603 ;   0.962 ; FF ; IC   ; 1      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|dataf                                             ;
+;   35.681 ;   0.078 ; FF ; CELL ; 5      ; LABCELL_X74_Y21_N42  ; u0|fpga_matching_core_0|u_book|buy_best_price~209|combout                                           ;
+;   36.737 ;   1.056 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|dataf                                                   ;
+;   36.811 ;   0.074 ; FF ; CELL ; 2      ; LABCELL_X80_Y24_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~22|combout                                                 ;
+;   37.025 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|datac                                                   ;
+;   37.377 ;   0.352 ; FR ; CELL ; 1      ; LABCELL_X80_Y24_N36  ; u0|fpga_matching_core_0|u_book|LessThan9~28|combout                                                 ;
+;   38.058 ;   0.681 ; RR ; IC   ; 1      ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|datac                                                   ;
+;   38.489 ;   0.431 ; RF ; CELL ; 33     ; LABCELL_X77_Y22_N18  ; u0|fpga_matching_core_0|u_book|LessThan9~35|combout                                                 ;
+;   39.340 ;   0.851 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|datad                                             ;
+;   39.781 ;   0.441 ; FF ; CELL ; 5      ; LABCELL_X75_Y20_N30  ; u0|fpga_matching_core_0|u_book|buy_best_price~227|combout                                           ;
+;   39.995 ;   0.214 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|datad                                                   ;
+;   40.432 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N24  ; u0|fpga_matching_core_0|u_book|LessThan10~4|combout                                                 ;
+;   40.594 ;   0.162 ; FF ; IC   ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|dataa                                                   ;
+;   41.074 ;   0.480 ; FF ; CELL ; 1      ; LABCELL_X75_Y20_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~6|combout                                                 ;
+;   41.582 ;   0.508 ; FF ; IC   ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|datac                                                  ;
+;   42.022 ;   0.440 ; FF ; CELL ; 1      ; LABCELL_X75_Y22_N6   ; u0|fpga_matching_core_0|u_book|LessThan10~31|combout                                                ;
+;   42.664 ;   0.642 ; FF ; IC   ; 1      ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|datad                                                     ;
+;   43.108 ;   0.444 ; FF ; CELL ; 58     ; LABCELL_X74_Y24_N48  ; u0|fpga_matching_core_0|u_book|always0~63|combout                                                   ;
+;   43.662 ;   0.554 ; FF ; IC   ; 1      ; LABCELL_X75_Y23_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~237|dataf                                             ;
+;   43.735 ;   0.073 ; FF ; CELL ; 3      ; LABCELL_X75_Y23_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~237|combout                                           ;
+;   44.505 ;   0.770 ; FF ; IC   ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|datae                                                   ;
+;   44.786 ;   0.281 ; FR ; CELL ; 1      ; LABCELL_X74_Y20_N15  ; u0|fpga_matching_core_0|u_book|LessThan11~0|combout                                                 ;
+;   44.998 ;   0.212 ; RR ; IC   ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|datad                                                   ;
+;   45.421 ;   0.423 ; RF ; CELL ; 1      ; LABCELL_X74_Y20_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~6|combout                                                 ;
+;   46.203 ;   0.782 ; FF ; IC   ; 1      ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|datac                                                  ;
+;   46.561 ;   0.358 ; FR ; CELL ; 33     ; LABCELL_X73_Y24_N30  ; u0|fpga_matching_core_0|u_book|LessThan11~35|combout                                                ;
+;   47.159 ;   0.598 ; RR ; IC   ; 1      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|datad                                             ;
+;   47.586 ;   0.427 ; RF ; CELL ; 4      ; LABCELL_X73_Y22_N51  ; u0|fpga_matching_core_0|u_book|buy_best_price~271|combout                                           ;
+;   47.799 ;   0.213 ; FF ; IC   ; 1      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|datac                                                  ;
+;   48.239 ;   0.440 ; FF ; CELL ; 3      ; LABCELL_X73_Y22_N54  ; u0|fpga_matching_core_0|u_book|LessThan12~11|combout                                                ;
+;   48.966 ;   0.727 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|datad                                                  ;
+;   49.326 ;   0.360 ; FR ; CELL ; 1      ; MLABCELL_X72_Y23_N33 ; u0|fpga_matching_core_0|u_book|LessThan12~20|combout                                                ;
+;   49.513 ;   0.187 ; RR ; IC   ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|dataa                                                  ;
+;   50.010 ;   0.497 ; RF ; CELL ; 1      ; MLABCELL_X72_Y23_N48 ; u0|fpga_matching_core_0|u_book|LessThan12~31|combout                                                ;
+;   50.208 ;   0.198 ; FF ; IC   ; 1      ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|dataf                                                     ;
+;   50.286 ;   0.078 ; FF ; CELL ; 58     ; MLABCELL_X72_Y23_N6  ; u0|fpga_matching_core_0|u_book|always0~74|combout                                                   ;
+;   51.218 ;   0.932 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|dataa                                             ;
+;   51.689 ;   0.471 ; FR ; CELL ; 4      ; MLABCELL_X72_Y20_N9  ; u0|fpga_matching_core_0|u_book|buy_best_price~286|combout                                           ;
+;   51.908 ;   0.219 ; RR ; IC   ; 1      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|datad                                                  ;
+;   52.332 ;   0.424 ; RF ; CELL ; 2      ; MLABCELL_X72_Y20_N12 ; u0|fpga_matching_core_0|u_book|LessThan13~11|combout                                                ;
+;   52.550 ;   0.218 ; FF ; IC   ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|datad                                                  ;
+;   52.897 ;   0.347 ; FR ; CELL ; 1      ; MLABCELL_X72_Y20_N30 ; u0|fpga_matching_core_0|u_book|LessThan13~17|combout                                                ;
+;   53.475 ;   0.578 ; RR ; IC   ; 1      ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|datad                                                  ;
+;   53.906 ;   0.431 ; RF ; CELL ; 34     ; LABCELL_X67_Y20_N42  ; u0|fpga_matching_core_0|u_book|LessThan13~35|combout                                                ;
+;   54.625 ;   0.719 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|dataa                                             ;
+;   55.115 ;   0.490 ; FR ; CELL ; 4      ; LABCELL_X63_Y19_N21  ; u0|fpga_matching_core_0|u_book|buy_best_price~310|combout                                           ;
+;   55.345 ;   0.230 ; RR ; IC   ; 1      ; LABCELL_X63_Y19_N42  ; u0|fpga_matching_core_0|u_book|LessThan14~5|datac                                                   ;
+;   55.770 ;   0.425 ; RF ; CELL ; 1      ; LABCELL_X63_Y19_N42  ; u0|fpga_matching_core_0|u_book|LessThan14~5|combout                                                 ;
+;   55.972 ;   0.202 ; FF ; IC   ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|datad                                                   ;
+;   56.408 ;   0.436 ; FF ; CELL ; 1      ; LABCELL_X63_Y19_N0   ; u0|fpga_matching_core_0|u_book|LessThan14~6|combout                                                 ;
+;   57.034 ;   0.626 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|datad                                                  ;
+;   57.471 ;   0.437 ; FF ; CELL ; 1      ; LABCELL_X62_Y18_N48  ; u0|fpga_matching_core_0|u_book|LessThan14~31|combout                                                ;
+;   57.659 ;   0.188 ; FF ; IC   ; 1      ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|dataf                                                     ;
+;   57.737 ;   0.078 ; FF ; CELL ; 42     ; LABCELL_X62_Y18_N18  ; u0|fpga_matching_core_0|u_book|always0~85|combout                                                   ;
+;   58.507 ;   0.770 ; FF ; IC   ; 1      ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|datae                                                   ;
+;   58.697 ;   0.190 ; FF ; CELL ; 165    ; LABCELL_X62_Y20_N36  ; u0|fpga_matching_core_0|u_book|opp_idx[0]~3|combout                                                 ;
+;   60.209 ;   1.512 ; FF ; IC   ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|datad                                                        ;
+;   60.645 ;   0.436 ; FF ; CELL ; 1      ; LABCELL_X57_Y27_N24  ; u0|fpga_matching_core_0|u_book|Mux13~2|combout                                                      ;
+;   61.472 ;   0.827 ; FF ; IC   ; 1      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|dataf                                                        ;
+;   61.543 ;   0.071 ; FF ; CELL ; 2      ; LABCELL_X56_Y23_N45  ; u0|fpga_matching_core_0|u_book|Mux13~4|combout                                                      ;
+;   62.338 ;   0.795 ; FF ; IC   ; 1      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|datae                                             ;
+;   62.512 ;   0.174 ; FF ; CELL ; 7      ; MLABCELL_X59_Y25_N30 ; u0|fpga_matching_core_0|u_book|resting_qty[18]~15|combout                                           ;
+;   63.214 ;   0.702 ; FF ; IC   ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|dataf                                                  ;
+;   63.287 ;   0.073 ; FF ; CELL ; 1      ; LABCELL_X62_Y23_N42  ; u0|fpga_matching_core_0|u_book|LessThan32~33|combout                                                ;
+;   64.056 ;   0.769 ; FF ; IC   ; 1      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|datae                                                  ;
+;   64.253 ;   0.197 ; FR ; CELL ; 2      ; LABCELL_X62_Y27_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~34|combout                                                ;
+;   64.802 ;   0.549 ; RR ; IC   ; 1      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|dataf                                                  ;
+;   64.886 ;   0.084 ; RF ; CELL ; 4      ; LABCELL_X62_Y26_N6   ; u0|fpga_matching_core_0|u_book|LessThan32~40|combout                                                ;
+;   65.108 ;   0.222 ; FF ; IC   ; 1      ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|dataf                                                  ;
+;   65.194 ;   0.086 ; FR ; CELL ; 15     ; LABCELL_X62_Y26_N3   ; u0|fpga_matching_core_0|u_book|LessThan32~52|combout                                                ;
+;   65.832 ;   0.638 ; RR ; IC   ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|dataf                                                      ;
+;   65.915 ;   0.083 ; RF ; CELL ; 1      ; LABCELL_X60_Y25_N12  ; u0|fpga_matching_core_0|u_book|Equal33~2|combout                                                    ;
+;   66.348 ;   0.433 ; FF ; IC   ; 1      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|datab                                                      ;
+;   66.813 ;   0.465 ; FR ; CELL ; 6      ; LABCELL_X61_Y25_N30  ; u0|fpga_matching_core_0|u_book|Equal33~4|combout                                                    ;
+;   67.107 ;   0.294 ; RR ; IC   ; 1      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|dataa                                          ;
+;   67.612 ;   0.505 ; RF ; CELL ; 8      ; LABCELL_X61_Y25_N51  ; u0|fpga_matching_core_0|u_book|sell_qty[15][0][30]~0|combout                                        ;
+;   68.646 ;   1.034 ; FF ; IC   ; 1      ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|dataf                                          ;
+;   68.721 ;   0.075 ; FF ; CELL ; 32     ; LABCELL_X61_Y20_N36  ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][31]~1|combout                                        ;
+;   70.131 ;   1.410 ; FF ; IC   ; 1      ; FF_X57_Y27_N26       ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|ena                                              ;
+;   70.703 ;   0.572 ; FF ; CELL ; 1      ; FF_X57_Y27_N26       ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+----------------------+-----------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Data Required Path                                                                                                                                               ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; Total    ; Incr    ; RF ; Type ; Fanout ; Location         ; Element                                                                                             ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+; 20.000   ; 20.000  ;    ;      ;        ;                  ; latch edge time                                                                                     ;
+; 23.321   ; 3.321   ;    ;      ;        ;                  ; clock path                                                                                          ;
+;   20.000 ;   0.000 ;    ;      ;        ;                  ; source latency                                                                                      ;
+;   20.000 ;   0.000 ;    ;      ; 1      ; PIN_AF14         ; CLOCK_50                                                                                            ;
+;   20.000 ;   0.000 ; RR ; IC   ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|i                                                                                    ;
+;   20.661 ;   0.661 ; RR ; CELL ; 1      ; IOIBUF_X32_Y0_N1 ; CLOCK_50~input|o                                                                                    ;
+;   20.989 ;   0.328 ; RR ; IC   ; 1      ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|inclk                                                                         ;
+;   21.241 ;   0.252 ; RR ; CELL ; 13724  ; CLKCTRL_G6       ; CLOCK_50~inputCLKENA0|outclk                                                                        ;
+;   22.874 ;   1.633 ; RR ; IC   ; 1      ; FF_X57_Y27_N26   ; u0|fpga_matching_core_0|u_book|sell_qty[11][0][18]|clk                                              ;
+;   23.281 ;   0.407 ; RR ; CELL ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
+;   23.321 ;   0.040 ;    ;      ;        ;                  ; clock pessimism removed                                                                             ;
+; 23.151   ; -0.170  ;    ;      ;        ;                  ; clock uncertainty                                                                                   ;
+; 23.151   ; 0.000   ;    ; uTsu ; 1      ; FF_X57_Y27_N26   ; soc_system:u0|fpga_matching_core:fpga_matching_core_0|bounded_order_book:u_book|sell_qty[11][0][18] ;
++----------+---------+----+------+--------+------------------+-----------------------------------------------------------------------------------------------------+
+
+----------------------------
+; Extra Fitter Information ;
+----------------------------
+HTML report is unavailable in plain text report export.
+
+
