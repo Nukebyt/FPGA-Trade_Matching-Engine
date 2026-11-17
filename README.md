@@ -12,68 +12,21 @@ A limit-order matching engine in hand-written SystemVerilog (no HLS), running on
 
 The ARM cores (HPS) run Linux and the C++ host code. They write each order into memory-mapped registers over the lightweight HPS-to-FPGA bridge. The matching core runs in fabric and passes the result back through the same registers.
 
-```mermaid
-flowchart LR
-  subgraph HPS["HPS: dual ARM Cortex-A9, Linux"]
-    HOST["C++ host code<br/>fpga_bridge, latency harness"]
-  end
-  subgraph FAB["FPGA fabric: Cyclone V"]
-    BR["LWH2F bridge<br/>0xFF207000"]
-    REG["fpga_matching_core<br/>Avalon-MM registers + CDC"]
-    OB["bounded_order_book<br/>16 levels x 8 orders"]
-    BR --> REG --> OB
-  end
-  HOST -- "/dev/mem MMIO" --> BR
-  OB -. "trade, status, latency" .-> REG
-  HOST -- "JSON snapshot, SSH" --> FWD["x86 forwarder"]
-  FWD --> KAFKA[("Kafka<br/>fpga-latency")]
-  FWD --> REDIS[("Redis")]
-  KAFKA --> PG[("Postgres")]
-  REDIS --> API["API gateway<br/>REST + WebSocket"]
-  PG --> API
-  API --> UI["React dashboard<br/>latency comparison panel"]
-```
+![System architecture: HPS ARM cores, LWH2F bridge, FPGA matching core and order book, plus the forwarder, Kafka, Postgres, API and dashboard](docs/img/architecture.png)
 
-The right-hand side is the integration with the software project. The ARM harness samples latency continuously and writes a JSON snapshot. An x86 forwarder pulls it over SSH into Kafka and Redis, and the dashboard plots it live next to the software rows. The reference copies of that code are in [`software-integration/`](software-integration/).
+The bottom row is the integration with the software project. The ARM harness samples latency continuously and writes a JSON snapshot. An x86 forwarder pulls it over SSH into Kafka and Redis, and the dashboard plots it live next to the software rows. The reference copies of that code are in [`software-integration/`](software-integration/).
 
 ### One order, end to end
 
 The core accepts one order at a time. Software writes the five input registers, pulses `START`, polls `BUSY`, then reads the result.
 
-```mermaid
-sequenceDiagram
-  participant SW as ARM software
-  participant R as Register file
-  participant C as Matching core
-  SW->>R: write ORDER_ID, SIDE, PRICE, QTY
-  SW->>R: CONTROL.START = 1
-  R->>C: START pulse (clock-domain crossing)
-  C->>C: match against book, rest remainder
-  loop until done
-    SW->>R: read STATUS
-    R-->>SW: BUSY=1
-  end
-  R-->>SW: DONE=1, REJECTED?
-  SW->>R: read TRADE_QTY, TRADE_PRICE, TRADE_ID, LATENCY_CYCLES
-```
+![Sequence of one order: write registers, start, poll status, read results](docs/img/order-flow.png)
 
 ### Inside the matching core
 
 The book is 16 price levels per side, each holding 8 resting orders in a time-priority FIFO. Levels are unordered slots. Finding the best price means comparing all 16 at once, which is the work software does one comparison at a time. The comparison is a four-stage registered tree.
 
-```mermaid
-stateDiagram-v2
-  [*] --> IDLE
-  IDLE --> DECODE: START
-  DECODE --> REDUCE_BEST: find best opposing level
-  REDUCE_BEST --> MATCH: 4 cycles, binary tree of 16
-  MATCH --> POP_LEVEL: resting order fully consumed
-  POP_LEVEL --> REDUCE_BEST: book changed, search again
-  MATCH --> REDUCE_REST: order filled, no cross, or partial fill of resting order
-  REDUCE_REST --> REST: 4 cycles, find matching or free level
-  REST --> DONE: rest remainder, or reject if book is full
-  DONE --> IDLE
-```
+![Matching core state machine: IDLE, DECODE, REDUCE_BEST, MATCH, POP_LEVEL, REDUCE_REST, REST, DONE](docs/img/state-machine.png)
 
 | Register | Dir | Meaning |
 |---|---|---|
