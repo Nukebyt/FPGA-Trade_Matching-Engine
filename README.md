@@ -1,359 +1,206 @@
 # FPGA Trade Matching Engine
 
-A hardware limit-order matching engine for one instrument, built in
-hand-written SystemVerilog (no HLS) for an Intel DE10-Standard board
-(Cyclone V SoC, `5CSXFC6D6F31C6`), running real trading-engine logic on
-real fabric — not a toy demo.
+A limit-order matching engine in hand-written SystemVerilog (no HLS), running on an Intel DE10-Standard board (Cyclone V SoC, `5CSXFC6D6F31C6`). It is the hardware counterpart to [Low-Latency-Trading-Exchange](https://github.com/Nukebyt/Low-Latency-Trading-Exchange), a C++ trading stack whose matching engine uses an unbounded `std::map` book. This repo solves the same matching problem with parallel comparators and measures the result on the board, with nothing simulated or projected.
 
-This is a hardware extension of
-**[Low-Latency-Trading-Exchange](https://github.com/Nukebyt/Low-Latency-Trading-Exchange)**,
-a 19-phase C++ software trading-infrastructure project (market
-simulator, feed handler, order book, matching engine, risk engine,
-Kafka/Postgres/Redis, REST/gRPC/WebSocket API, React dashboard). That
-project's matching engine is deliberately unbounded (`std::map`-backed);
-this repo asks what changes when the same problem is solved in
-dedicated parallel hardware instead, and measures the answer on real
-silicon rather than assuming it.
+**Findings in brief**
 
-## C++ vs. FPGA: the real numbers
+- The FPGA matcher takes 256 ns per order. The same logic in C++ on the board's ARM cores takes 590 ns without timer overhead, or 1,863 ns with per-event timing, so the fabric is **2.3x to 7.3x faster** depending on which software figure you use.
+- Calling it from software costs more than it saves. The full ARM-to-FPGA round trip is **3.4x to 9.4x slower** than pure C++ on the same cores (5,564 ns without timer overhead, 6,342 ns with), because the register interface handles one order at a time.
+- The design meets timing at 50 MHz only after pipelining the best-price search. The first version missed by 47.6 ns.
 
-Real, measured, on real hardware — not simulated or projected. The
-table below compares three things running the **same** 1,000,000-order
-trace (`seed=42`), the **same** `N_LEVELS=16`/`M_ORDERS=8` bounds, so
-they're directly comparable to each other. (A fourth number — plain C++
-on a desktop PC — is deliberately *not* in this table; see
-[below](#the-245-ns-desktop-pc-number-and-why-its-not-in-the-table-above)
-for why, and why comparing it directly to the FPGA row is misleading.)
+## Architecture
 
-### Plain-English summary
+The ARM cores (HPS) run Linux and the C++ host code. They write each order into memory-mapped registers over the lightweight HPS-to-FPGA bridge. The matching core runs in fabric and passes the result back through the same registers.
 
-- **The FPGA chip itself is genuinely fast at the one thing it does**:
-  finding the best price among 16 candidates. It checks all 16 at once,
-  in parallel circuits, instead of one CPU checking them one at a time.
-  That's row 3 below (**256 ns**) vs. row 2 (**1863 ns**) — the FPGA
-  wins by ~7.3x on the actual computation.
-- **But "talking to the FPGA" costs more than the FPGA saves.** Every
-  order has to travel from the ARM processor, across a communication
-  bus, into the chip, and the answer has to travel back — and the
-  software has to sit there polling "are you done yet?" the whole time.
-  That round trip (row 4, **6342 ns**) costs more than the entire
-  software computation it was trying to speed up. It's like winning a
-  100m sprint but losing so much time walking to the starting line and
-  back that you'd have been better off not racing at all.
-- **The lesson isn't "FPGAs are slow."** It's that *how* you talk to
-  custom hardware matters as much as how fast the hardware itself is —
-  and this project measured that gap instead of assuming it away. The
-  named fix (letting the software hand the FPGA several orders at once
-  instead of one-at-a-time-and-wait) is real, identified, and just not
-  built yet — see the Throughput ceiling section below.
+```mermaid
+flowchart LR
+  subgraph HPS["HPS: dual ARM Cortex-A9, Linux"]
+    HOST["C++ host code<br/>fpga_bridge, latency harness"]
+  end
+  subgraph FAB["FPGA fabric: Cyclone V"]
+    BR["LWH2F bridge<br/>0xFF207000"]
+    REG["fpga_matching_core<br/>Avalon-MM registers + CDC"]
+    OB["bounded_order_book<br/>16 levels x 8 orders"]
+    BR --> REG --> OB
+  end
+  HOST -- "/dev/mem MMIO" --> BR
+  OB -. "trade, status, latency" .-> REG
+  HOST -- "JSON snapshot, SSH" --> FWD["x86 forwarder"]
+  FWD --> KAFKA[("Kafka<br/>fpga-latency")]
+  FWD --> REDIS[("Redis")]
+  KAFKA --> PG[("Postgres")]
+  REDIS --> API["API gateway<br/>REST + WebSocket"]
+  PG --> API
+  API --> UI["React dashboard<br/>latency comparison panel"]
+```
 
-### Per-event latency
+The right-hand side is the integration with the software project. The ARM harness samples latency continuously and writes a JSON snapshot. An x86 forwarder pulls it over SSH into Kafka and Redis, and the dashboard plots it live next to the software rows. The reference copies of that code are in [`software-integration/`](software-integration/).
 
-| # | Engine | Platform | Mean | p50 | p99 | Reject rate |
+### One order, end to end
+
+The core accepts one order at a time. Software writes the five input registers, pulses `START`, polls `BUSY`, then reads the result.
+
+```mermaid
+sequenceDiagram
+  participant SW as ARM software
+  participant R as Register file
+  participant C as Matching core
+  SW->>R: write ORDER_ID, SIDE, PRICE, QTY
+  SW->>R: CONTROL.START = 1
+  R->>C: START pulse (clock-domain crossing)
+  C->>C: match against book, rest remainder
+  loop until done
+    SW->>R: read STATUS
+    R-->>SW: BUSY=1
+  end
+  R-->>SW: DONE=1, REJECTED?
+  SW->>R: read TRADE_QTY, TRADE_PRICE, TRADE_ID, LATENCY_CYCLES
+```
+
+### Inside the matching core
+
+The book is 16 price levels per side, each holding 8 resting orders in a time-priority FIFO. Levels are unordered slots. Finding the best price means comparing all 16 at once, which is the work software does one comparison at a time. The comparison is a four-stage registered tree.
+
+```mermaid
+stateDiagram-v2
+  [*] --> IDLE
+  IDLE --> DECODE: START
+  DECODE --> REDUCE_BEST: find best opposing level
+  REDUCE_BEST --> MATCH: 4 cycles, binary tree of 16
+  MATCH --> POP_LEVEL: resting order fully consumed
+  POP_LEVEL --> REDUCE_BEST: book changed, search again
+  MATCH --> REDUCE_REST: order filled, no cross, or partial fill of resting order
+  REDUCE_REST --> REST: 4 cycles, find matching or free level
+  REST --> DONE: rest remainder, or reject if book is full
+  DONE --> IDLE
+```
+
+| Register | Dir | Meaning |
+|---|---|---|
+| `ORDER_ID_LO/HI`, `SIDE`, `PRICE`, `QTY` | W | The order. Price is signed ticks (x10,000). |
+| `CONTROL` | W | Bit 0 = START |
+| `STATUS` | R | BUSY, DONE, REJECTED |
+| `TRADE_QTY`, `TRADE_PRICE`, `TRADE_ID_LO/HI` | R | Total fill and the last fill's price and id |
+| `LATENCY_CYCLES` | R | Clock cycles from START to DONE |
+
+The full register map, algorithm notes and clock-domain details are in [`docs/fpga-matching-engine.md`](docs/fpga-matching-engine.md).
+
+## Results
+
+All rows replay the same 1,000,000-order trace (seed 42) against the same 16 x 8 bounds on the same board.
+
+### Latency
+
+![Mean latency per order for ARM C++, FPGA fabric and the full ARM-to-FPGA round trip](docs/img/latency.png)
+
+| Engine | Where it runs | Mean, per-event timing | Mean, no timer overhead | p50 | p99 | Reject rate |
 |---|---|---|---|---|---|---|
-| 2 | C++, bounded (same N/M as FPGA) | DE10 ARM Cortex-A9, native | 1863.39 ns | 1820.00 ns | 2760.00 ns | 72.359% |
-| 3 | SystemVerilog, fabric-internal | DE10 Cyclone V fabric | **256.31 ns** (12.82 cycles) | 240.00 ns | 480.00 ns | 73.555%¹ |
-| 4 | Same core, full HPS round-trip | ARM → LWH2F → fabric → ARM | 6341.75 ns | 6320.00 ns | 6420.00 ns | 73.555%¹ |
+| C++, bounded | ARM Cortex-A9 | 1,863 ns | 590 ns | 1,820 ns | 2,760 ns | 72.4% |
+| SystemVerilog core | FPGA fabric | **256 ns** (12.8 cycles) | 256 ns | 240 ns | 480 ns | 73.6%* |
+| Same core, from software | ARM to bridge to fabric to ARM | 6,342 ns | 5,564 ns | 6,320 ns | 6,420 ns | 73.6%* |
 
-¹ Rows 3/4 are the same hardware run, so they share one reject count.
+*The two FPGA rows are the same run.
 
-**Reading this table correctly is the whole point**: row 3 vs. row 2 is
-the fair, apples-to-apples hardware-vs-software result — the FPGA's
-matching computation is **~7.3x faster**. But row 4, the honest "if you
-deployed this today" number including the register-interface round
-trip, is **~3.4x *slower* than row 2** — the single-order-at-a-time
-`STATUS.BUSY`-polling interface between the ARM cores and the fabric
-dominates and erases the fabric's own speed advantage. Hardware wins the
-computation decisively and loses the deployed system, for a completely
-identified, non-mysterious reason (the interface, not the matching
-logic — see [`docs/fpga-matching-engine.md`](docs/fpga-matching-engine.md)).
+The ARM rows are timed with a clock call around every order. On this board that call is expensive (about 2.5 µs per order for the C++ row, 1.6 µs for the round trip), so the per-event columns, p50 and p99 all include that overhead. The probable cause is a missing fast `clock_gettime` path on this kernel, which I have not confirmed. The "no timer overhead" column is the aggregate time of a run without per-event timing. The fabric row is read from the core's own cycle counter, so it has no such overhead.
 
-### The 245 ns desktop-PC number, and why it's not in the table above
+Fabric against C++ is the like-for-like comparison. The round trip loses because every order pays for a Linux MMIO write sequence, a bridge crossing and a polling loop, and that cost is larger than the compute the fabric saves.
 
-Earlier drafts of this README listed a fourth row: plain C++, unbounded
-`std::map`, running on an ordinary x86 desktop/laptop — **~245 ns per
-event**. It's a real, previously-measured number (Phase 17 of the
-[software project](https://github.com/Nukebyt/Low-Latency-Trading-Exchange),
-`BM_RealisticMixedWorkload`), but it doesn't belong in a head-to-head
-table with the FPGA rows, for three separate, honest reasons:
+A desktop x86 build of the software engine runs at about 245 ns per event. That figure is left out of the comparison because it replays a different workload (add, modify and cancel on an unbounded book) on a much faster CPU that never leaves the chip.
 
-1. **It's not the same test.** That benchmark replays a full
-   ADD/MODIFY/CANCEL order mix on an *unbounded* book. Rows 2-4 above
-   replay an ADD-only trace against a *bounded* 16-level book. Different
-   code paths, different operation mix — not the same question.
-2. **It's not the same class of CPU.** A desktop/laptop x86 chip runs at
-   several GHz with deep pipelines, branch prediction, and large caches.
-   The DE10 board's ARM Cortex-A9 is a small embedded core built for
-   low power, not peak speed — it's simply a much slower chip *before*
-   any FPGA is even involved. Comparing "FPGA round-trip on a phone-class
-   ARM chip" against "plain C++ on a gaming desktop" mixes up two
-   different questions: "is the algorithm/hardware faster?" and "is this
-   specific embedded board's CPU faster than my desktop?" (it isn't,
-   and was never expected to be).
-3. **The 245 ns number never leaves the CPU core it runs on.** A C++
-   function call reads and writes ordinary RAM/registers inside one
-   chip. Row 4's 6342 ns, by contrast, is a real trip *off* the ARM
-   chip's own compute path — through Linux, across a physical on-chip
-   bus (the "LWH2F bridge"), into a completely separate piece of silicon
-   (the FPGA fabric), and back. That crossing has a real, physical cost
-   no in-process function call ever has to pay, no matter how fast
-   either chip is individually.
+### Throughput
 
-**So "why is the FPGA slower than a PC?"** — it isn't a fair fight to
-begin with: different test, a much weaker CPU on the board side, and a
-real hardware boundary being crossed that the PC number never has to
-cross. The numbers worth trusting for "is hardware actually faster
-here?" are rows 2, 3, and 4 above — same board, same trace, same
-bounds — and *that* comparison is the real, interesting result: the
-FPGA fabric itself is decisively faster (row 3), but the price of
-reaching it from software (row 4) currently costs more than it saves.
+![Throughput ceiling of the FPGA core alone versus the deployed system](docs/img/throughput.png)
 
-### Throughput ceiling
+The core could take about 3.9 M orders/s. The deployed system manages about 158 K orders/s (about 180 K without timer overhead) because it waits for each order to finish before sending the next. The interface is the bottleneck by 22x to 25x. The obvious fix is a request queue in the register map so several orders can be in flight, which is not built yet.
 
-| | Derived from | Events/sec |
-|---|---|---|
-| Core alone (fabric compute) | Row 3 mean | **~3.90M** |
-| Deployed system (core + register interface) | Row 4 mean | **~157.7K** |
+### Timing
 
-**In plain terms**: the FPGA circuit itself could process about 3.9
-million orders a second if you could feed it directly. The actual
-deployed system manages about 158 thousand a second, because it has to
-stop and wait for one full round trip (send order, poll "done yet?",
-read the answer) before it's allowed to send the next one — it's not
-allowed to have several orders "in flight" at once. The interface, not
-the fabric, is the system's real bottleneck — by ~24.75x. See
-`docs/fpga-performance.md`'s Phase 29 section for the named follow-up (a
-request queue in the register map, so multiple orders could be in
-flight at once) this points to — not built yet, but exactly the kind of
-fix this measurement makes obvious.
+![Worst-case setup slack before and after pipelining the best-price reduction](docs/img/timing.png)
 
-### Resource utilization (Cyclone V `5CSXFC6D6F31C6`, 41,910 ALM budget)
+The first version found the best price among 16 levels in a single clock cycle. Quartus built it as a 76-level serial chain, which missed the 20 ns clock period by 47.6 ns. Running static timing analysis exposed this, and it was the real cause of a reject-rate mismatch and a board hang that had been blamed on other things. Pipelining the search into 4 registered stages gives +5.16 ns of slack with zero failing endpoints at every corner, at the cost of 4 extra cycles per search ([bug #13](fpga_docs/bugs.md)).
 
-| | Standalone core only | Full integrated system (HPS + Platform Designer) |
-|---|---|---|
-| ALMs | 9,040 (22%) | 10,688 (26%) |
-| Registers | not separately reported | 15,358 |
-| RAM blocks | 0 / 553 (0%) | 6 / 553 (1%)² |
-| DSP blocks | 0 / 112 (0%) | 0 / 112 (0%) |
+### Resources
 
-² Still **zero** from the order book itself, confirmed not assumed —
-its parallel-access pattern structurally can't target block RAM's 1-2
-ports. The 6 blocks come from the surrounding HPS/DDR3 plumbing.
+![FPGA resource usage: ALMs, RAM blocks and DSP blocks](docs/img/resources.png)
 
-**In plain terms**: an FPGA has two very different kinds of storage —
-ordinary logic registers (fast, but there's a limited supply) and
-dedicated memory blocks (bigger, but only 1-2 things can read/write them
-at once). This design needs to compare *all 16* price levels
-*simultaneously* every cycle — which the dedicated memory blocks
-physically cannot do (they only offer 1-2 access ports). So the tool
-was forced to build the order book entirely out of ordinary registers
-instead, using about a quarter of the chip's total logic capacity and
-none of its dedicated memory — not a failed optimization, a direct,
-structural consequence of "compare everything at once" being the whole
-point of building this in hardware.
+The order book uses no block RAM. Block RAM offers one or two ports, and the design reads all 16 levels every cycle, so Quartus implemented the whole book as logic registers. The 6 RAM blocks in the full system come from the HPS and DDR3 plumbing. The standalone core alone takes 9,040 ALMs (22%).
 
-### Timing closure
+### Why 72% of orders are rejected
 
-| | Worst-case setup slack (`CLOCK_50`) | TNS (all corners) |
-|---|---|---|
-| Before fix (single-cycle reduction) | **-47.6 ns** | tens of thousands of ns |
-| After fix (pipelined reduction) | **+5.157 ns** | **0.000** |
-
-**In plain terms**: every digital chip has a clock ticking at a fixed
-rate, and every calculation between one tick and the next has to
-*finish* before the next tick arrives — like a relay race where every
-runner has to reach the next handoff point before the starting gun for
-the next leg fires. The original design tried to compare all 16 price
-levels and pick a winner in a single tick, but that turned out to take
-almost 3.5x longer than one tick actually allows — some ticks were
-firing before the answer was ready, which corrupts results in ways that
-don't show up in a slower, idealized simulation, only on the real chip
-running at real speed. "Negative slack" is exactly this: a promise the
-circuit can't keep. The fix spreads the same comparison across 4 ticks
-instead of 1 (see the Plain-English summary above) — slower per
-comparison, but a promise the real chip can actually keep every time.
-This was a real synthesizability bug, not a rounding error — full root
-cause in `fpga_docs/bugs.md` #13 and the "what actually broke" writeup
-in
-[`docs/ADR-007-fpga-bounded-order-book.md`](docs/ADR-007-fpga-bounded-order-book.md)'s
-Amendment section.
-
-## Why a bounded book, and why that's the right hardware answer
-
-Software's `std::map`-backed book grows to whatever the workload needs;
-an FPGA has no heap — every comparator and storage slot must be sized at
-synthesis time. Rather than treat that as a limitation to work around,
-this design leans into it: **N=16 price levels, M=8 resting orders per
-level, evaluated in parallel** by dedicated comparator hardware instead
-of walked one at a time by a single ALU. The full reasoning, the
-bounded-book's real consequences (a structural ~72-73% reject rate under
-sustained load — not a bug, a named, measured tradeoff), and what
-changed between the original plan and what actually got built are all
-in [`docs/ADR-007-fpga-bounded-order-book.md`](docs/ADR-007-fpga-bounded-order-book.md).
-
-**In plain terms, the 72-73% reject rate isn't a bug — it's what
-"16 shelves, no way to clear one early" always leads to.** Imagine 16
-labeled shelf slots for prices, each holding up to 8 waiting orders.
-A slot only empties when someone buys *everything* sitting on it, at
-*exactly* that price. There's deliberately no CANCEL in this design (see
-the register map in
-[`docs/fpga-matching-engine.md`](docs/fpga-matching-engine.md)) — so if
-the market's price wanders off and never comes back to a slot, whatever
-is parked there stays parked *forever*, occupying that slot for the
-rest of the run. Run enough orders through 16 fixed slots with no way
-to reclaim a stale one, and most of them end up permanently stuck long
-before the run ends — so most *new* resting orders arrive to find every
-slot already full, and get rejected. Widening it to 32 or 64 slots would
-only delay this, not fix it — the fix would be adding CANCEL, which is a
-deliberate, named scope boundary of this design (v1), not an oversight.
+The bounded book rejects an order only when its unfilled remainder needs a new price level and all 16 are taken, or its level already holds 8 orders. A level frees up only when every order at that exact price has been filled, and this version has no CANCEL. As the market price drifts, orders left at old prices are never matched, so those slots stay occupied for the rest of the run. After enough orders, nearly every slot is stuck. Widening the book would only delay this. CANCEL support is the fix, and it is out of scope for this version ([ADR-007](docs/ADR-007-fpga-bounded-order-book.md)).
 
 ## Repository layout
 
 ```
-rtl/                          Hand-written SystemVerilog source (source of truth)
-  bounded_order_book.sv         The core: N-level parallel book + pipelined
-                                 best-price reduction (registered binary tree)
-  fpga_matching_core.sv         Avalon-MM register-map wrapper, avs_clk/core_clk CDC
-  cdc_pulse_sync.sv             Two-flop clock-domain-crossing synchronizer
-
-sim/                           Questa testbenches (real source, not generated)
-  tb_fpga_matching_core.sv        14 directed test cases
-  tb_bounded_order_book_multilevel.sv   Multi-level-walk sweep
-  tb_trace_replay*.sv             1,000,000-order trace replay vs. a C++ reference
-  sim.do                           Questa driver script
-
-host/                          C++ host software (cross-compiles for the DE10's ARM cores)
-  bounded_matching_engine/        Software reference impl, same N/M bounds
-  fpga_bridge/                    /dev/mem mmap driver + benchmark harness
-  fpga_latency_harness/           Continuous 4-way latency sampler -> JSON snapshot
-
-ip/fpga_matching_core/         Platform Designer (Qsys) component definition
-soc_system.qsys                Full HPS + DDR3 + fpga_matching_core system
-soc_system/                    qsys-generate output (committed - see note below)
-hps_isw_handoff/                HPS preloader/BSP handoff files (committed - see note below)
-
-DE10_Standard_golden_top.{v,qsf,sdc,qpf}   Top-level board project
-platform_setup.tcl             Pin/IO assignments (Terasic-provided)
-*.tcl                          Build-flow driver scripts (see Building below)
-
-output_files/                  Real quartus_fit/quartus_sta/quartus_asm output —
-                                the actual verified .sof and every timing/resource
-                                report referenced in docs/, committed rather than
-                                left to regeneration (see Building below)
-synth_check/                   Standalone core-only synthesis check (Phase 22's
-                                pre-integration resource baseline) — its own small
-                                Quartus sub-project, reports committed
-
-docs/                          FPGA-side documentation (synced from the software
-                                repo where noted; each file says which way)
-fpga_docs/                     bugs.md (every real bug found, #1-13) and
-                                interview-questions.md
-
-software-integration/          Reference copies of the code that connects this
-                                core to the software project's live stack —
-                                see software-integration/README.md
+rtl/                  SystemVerilog source
+  bounded_order_book.sv   16-level parallel book, pipelined best-price tree
+  fpga_matching_core.sv   Avalon-MM register map, clock-domain crossing
+  cdc_pulse_sync.sv       two-flop synchronizer
+sim/                  Questa testbenches: 14 directed tests, multi-level sweep,
+                      1M-order trace replay against a C++ reference
+host/                 C++ for the ARM cores (cross-compiled)
+  bounded_matching_engine/  software reference with the same bounds
+  fpga_bridge/              /dev/mem driver and benchmark
+  fpga_latency_harness/     continuous latency sampler
+ip/, soc_system.qsys  Platform Designer component and HPS system
+soc_system/, hps_isw_handoff/   generated output, committed (see below)
+output_files/         .sof and every fit, timing and assembler report
+software-integration/ reference copies of the Kafka/API/dashboard code
+docs/, fpga_docs/     design docs, ADR, bug log (13 bugs, each with root cause)
 ```
 
-**Why `soc_system/` and `hps_isw_handoff/` are committed even though
-they're tool-generated**: regenerating them (`qsys-generate` +
-Quartus's HPS SDRAM pin-assignment step) hit real, documented Intel
-toolchain bugs during this project's own development —
-`fpga_docs/bugs.md` #8 (5 `.qip` entries silently regress on every
-regeneration) and #9 (1449 termination errors from a post-generation
-step that's easy to miss). Committing the known-good output avoids
-requiring every clone to rediscover and re-fix both. The one hand-edited
-file inside `soc_system/`'s generated tree
-(`soc_system/synthesis/submodules/rtl/*.sv`) is a byte-for-byte synced
-copy of `rtl/*.sv` — Quartus compiles the RTL from that path, not the
-top-level one, a real quirk of how this project's `.qsf` references it;
-**both copies must be kept in sync by hand** if you edit `rtl/`.
+`soc_system/` and `hps_isw_handoff/` are tool-generated but committed, because regenerating them hits two Intel toolchain bugs ([#8](fpga_docs/bugs.md), [#9](fpga_docs/bugs.md)). The Quartus project compiles RTL from `soc_system/synthesis/submodules/rtl/`, so keep it in sync with `rtl/` by hand.
 
 ## Building
 
-Requires Quartus Prime **21.1.0** (Lite, build 842) targeting Cyclone V,
-and Siemens Questa (developed against **2024.1**) for simulation.
+Needs Quartus Prime 21.1 Lite (Cyclone V) and Questa (tested with 2024.1).
 
-**Simulate first** (no board or Quartus build needed). `sim/sim.do` runs
-the 14 directed test cases:
+**Simulate** (no board needed):
+
 ```
 cd sim
 vsim -c -do sim.do
 ```
-The multi-level (`tb_bounded_order_book_multilevel.sv`) and trace-replay
-(`tb_trace_replay.sv`, `tb_trace_replay_wrapper.sv`) testbenches don't
-have their own committed `.do` scripts yet (they were run ad hoc during
-development) — compile/run them the same way, e.g.:
-```
-vlib work
-vlog -sv ../rtl/cdc_pulse_sync.sv ../rtl/bounded_order_book.sv ../rtl/fpga_matching_core.sv tb_trace_replay_wrapper.sv
-vsim -c work.tb_trace_replay_wrapper
-run -all
-```
-The trace-replay testbenches read `sim/trace.csv` (the 1,000,000-order
-test vector, ~27MB), which is not committed — it's deterministic
-(seed=42, hardcoded in `gen_trace.cpp`, not a CLI argument) and
-regenerates via:
+
+The trace-replay testbenches read `sim/trace.csv`, which is not committed (27 MB, deterministic). Regenerate it with:
+
 ```
 g++ -O2 -std=c++17 -I host/bounded_matching_engine/include \
     host/fpga_bridge/tools/gen_trace.cpp -o gen_trace
 ./gen_trace 1000000 sim/trace.csv
 ```
 
-**Synthesize the full board project**:
+Then run the wrapper testbench:
+
+```
+vlib work
+vlog -sv ../rtl/cdc_pulse_sync.sv ../rtl/bounded_order_book.sv ../rtl/fpga_matching_core.sv tb_trace_replay_wrapper.sv
+vsim -c work.tb_trace_replay_wrapper -do "run -all"
+```
+
+**Compile the board project:**
+
 ```
 quartus_map DE10_Standard_golden_top
 quartus_fit DE10_Standard_golden_top
 quartus_asm DE10_Standard_golden_top
 quartus_sta DE10_Standard_golden_top
 ```
-Regenerating `soc_system.qsys` (`qsys-generate`) is only needed if you
-change the Platform Designer system itself — see the toolchain-bug note
-above before doing so, and re-run
-`apply_hps_sdram_pin_assignments.tcl` afterward (Quartus's own
-`qsys-generate` log names this step explicitly; skipping it is what
-caused bug #9).
 
-**Programming the board** (`quartus_pgm`) is not something this README
-walks through as a one-liner — treat it with real care. This project's
-own development hit two board-hang incidents from an under-verified RTL
-change reaching hardware (`fpga_docs/bugs.md` #11/#12) before the actual
-root cause was found; simulate and check `quartus_sta` slack first,
-every time.
+After regenerating `soc_system.qsys`, re-run `apply_hps_sdram_pin_assignments.tcl`, or the fitter fails with termination errors (bug #9). Check simulation and `quartus_sta` slack before programming the board.
+
+## Known open items
+
+- Hardware reject rate is about 1 point above the C++ reference (73.4-73.6% vs 72.4%). The RTL matches the reference exactly across all 1M orders in simulation, so the suspect is power-on state on the real board. Details in [`docs/fpga-matching-engine.md`](docs/fpga-matching-engine.md#known-open-gaps).
+- `core_clk` and `avs_clk` are separate clock inputs with a real crossing, but both run from the same 50 MHz clock for now.
 
 ## Documentation
 
-- [`docs/fpga-matching-engine.md`](docs/fpga-matching-engine.md) — start
-  here: scope, register map, the matching algorithm and the real
-  synthesizability bug that changed it, clock domains, full measured
-  results, the backend/frontend integration chain, and every known open
-  gap named explicitly.
-- [`docs/ADR-007-fpga-bounded-order-book.md`](docs/ADR-007-fpga-bounded-order-book.md) —
-  the bounded-book design decision, with an amendment covering
-  everything that changed between the plan and what was actually built.
-- [`docs/fpga-performance.md`](docs/fpga-performance.md) — full
-  hardware-vs-software results tables and resource/timing/throughput
-  numbers (Phases 26 and 29).
-- [`docs/fpga-roadmap.md`](docs/fpga-roadmap.md) — the phase-by-phase
-  checklist (20-30) this work was tracked against, including every
-  detour and dead end, not just the parts that worked.
-- [`fpga_docs/bugs.md`](fpga_docs/bugs.md) — every real bug found during
-  the build, numbered #1-13, each with root cause and fix, not just a
-  changelog entry.
-
-## Status
-
-Phases 20-24 and 26-29 (of a 20-30 checklist) are done, verified in
-simulation and on real hardware. Two items remain open by choice, not
-oversight: Phase 25 (SignalTap capture) was skipped — it needs another
-GUI-driven rebuild+reflash cycle and the bug it would have investigated
-turned out to have a different, already-found root cause; and a small
-(~1 percentage point) reject-rate gap between hardware and the software
-reference remains unexplained, with a named leading suspect. Both are
-detailed in [`docs/fpga-matching-engine.md`](docs/fpga-matching-engine.md#known-open-gaps).
+- [`docs/fpga-matching-engine.md`](docs/fpga-matching-engine.md): scope, register map, algorithm, clock domains, integration
+- [`docs/ADR-007-fpga-bounded-order-book.md`](docs/ADR-007-fpga-bounded-order-book.md): the bounded-book decision and what changed during the build
+- [`docs/fpga-performance.md`](docs/fpga-performance.md): full measurement tables and method
+- [`fpga_docs/bugs.md`](fpga_docs/bugs.md): every bug found, with root cause and fix
 
 ## License
 
-No license file is present in the upstream
-[Low-Latency-Trading-Exchange](https://github.com/Nukebyt/Low-Latency-Trading-Exchange)
-project either; this repo follows the same as-is stance until that
-changes. Both projects are educational, not production trading systems.
+No license file yet, matching the upstream software project. Both are educational projects, not production trading systems.
